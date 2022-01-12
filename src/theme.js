@@ -47,9 +47,7 @@ const theme = createTheme({
         }
     },
     breakpoints: {
-        values: {
-            md: 780
-        }
+        
     },
     typography: {
         
