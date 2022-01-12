@@ -4,6 +4,7 @@ import { catData } from "./catData";
 import { AppBar } from "./components/AppBar"
 // MUI components
 import { Container, Box, Typography } from '@mui/material'
+import { Dialog } from '@mui/material'
 // THEME
 import theme from "./theme"
 import { ThemeProvider } from '@mui/material'
@@ -60,8 +61,41 @@ function Detail(props) {
 }
 
 function EditModal(props) {
+    let { open } = props
     return (
-        <Box >
-        </Box>
+        
+        // <Box sx={{
+        //     width: "100vw",
+        //     height: "100vh",
+        //     position: "absolute",
+        //     display: 'flex',
+        //     justifyContent: "center",
+        //     alignItems: "center"
+
+
+        // }}>
+            <Dialog 
+                open={open}
+                PaperProps={{
+                    sx: {
+                        width: "1000px",
+                        height: "625px",
+                        borderRadius: 4
+                    }
+
+                }}
+                sx={{
+                    
+
+                    // backgroundColor: "#f3f",
+                    // position: "absolute",
+                    // display: "flex",
+                    // alignSelf: "center",
+                    // margin: "auto 0"
+                }}>
+                
+
+            </Dialog>
+        // </Box>
     )
 }
