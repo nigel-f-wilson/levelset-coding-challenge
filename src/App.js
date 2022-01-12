@@ -9,6 +9,9 @@ import { Dialog } from '@mui/material'
 import theme from "./theme"
 import { ThemeProvider } from '@mui/material'
 
+let primary = theme.palette.primary.main
+
+
 export default function App() {
     const [selectedCatId, setSelectedCatId] = useState(null)
 
