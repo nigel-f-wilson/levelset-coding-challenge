@@ -10,6 +10,15 @@ import theme from "./theme"
 import { ThemeProvider } from '@mui/material'
 
 export default function App() {
+    const [selectedCatId, setSelectedCatId] = useState(null)
+
+    const [editModalOpen, setEditModalOpen] = useState(false)
+
+    const toggleEditModal = (editModalOpen) => {
+        setEditModalOpen(!editModalOpen)
+    }
+    
+    
     catData.forEach(cat => {
         console.log(`DATA for cat number ${cat.id}: ${JSON.stringify(cat, null, 4)}`);
     });
