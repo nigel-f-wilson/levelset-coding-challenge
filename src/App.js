@@ -53,9 +53,15 @@ function Summary(props) {
     )
 }
 
+
+
 function Detail(props) {
     return (
-        <Box >
+        <Box sx={{
+            flex: "0 0 65%",
+            backgroundColor: "#33f",
+            height: "100%",
+        }}>
         </Box>
     )
 }
