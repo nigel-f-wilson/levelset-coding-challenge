@@ -3,6 +3,9 @@ import { catData } from "./catData";
 
 // MUI components
 import { Container, Box, Typography } from '@mui/material'
+// THEME
+import theme from "./theme"
+import { ThemeProvider } from '@mui/material'
 
 export default function App() {
     catData.forEach(cat => {
