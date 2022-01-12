@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
 import { catData } from "./catData";
 
+import { AppBar } from "./components/AppBar"
 // MUI components
 import { Container, Box, Typography } from '@mui/material'
 // THEME
@@ -25,6 +26,7 @@ export default function App() {
                     flexDirection: "column"
                 }}
             >
+                <AppBar />
                 <AppBody />
 
                 
