@@ -1,6 +1,8 @@
 import { React, useState, useMemo } from 'react'
 import { useTheme } from '@mui/styles';
 
+import { convertDateFormat } from "../lowLevelHelpers";
+
 
 // MUI components
 import { Box, Avatar, Typography } from '@mui/material'
@@ -72,16 +74,3 @@ function CatSummary(props) {
 
  
  
-
-function convertDateFormat(inputDate) {
-    let firstHyphen = inputDate.indexOf("-")
-    let secondHyphen = inputDate.lastIndexOf("-")
-    let year = inputDate.slice(0, firstHyphen)
-    let monthList = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
-    let monthNumber = Number(inputDate.slice(firstHyphen + 1, secondHyphen))
-    let month = monthList[(monthNumber - 1)]
-    let day = Number(inputDate.slice(secondHyphen + 1))
-    let date = `${day} ${month} ${year}`
-    // console.log(`DATE: ${date}`);
-    return date
-}
