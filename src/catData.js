@@ -1,4 +1,4 @@
-export const catData = [
+export const sourceCatData = [
     {
         "id": 1,
         "name": "Sam",

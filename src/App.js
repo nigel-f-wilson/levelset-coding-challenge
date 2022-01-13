@@ -1,5 +1,6 @@
 import { React, useState,  useMemo } from 'react'
 import { catData } from "./catData";
+import { sourceCatData } from "./catData";
 
 import { AppBar } from "./components/AppBar"
 // MUI components
@@ -15,7 +16,7 @@ let primary = theme.palette.primary.main
 
 
 export default function App() {
-    const [selectedCat, setSelectedCat] = useState()
+    const [catData, setCatData] = useState(sourceCatData)
     const [editModalOpen, setEditModalOpen] = useState(false)
     // const [viewCounts, setViewCounts] = useState(new Map(catData.map()))  // AVOID using map because ids are unique and start from 1
 
