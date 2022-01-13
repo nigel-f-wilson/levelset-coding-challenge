@@ -19,7 +19,7 @@ let primary = theme.palette.primary.main
 
 
 export default function App() {
-    const [catData, setCatData] = useState(sourceCatData)
+    const [catList, setCatList] = useState(sourceCatData)
 
     
     const [selectedCatId, setSelectedCatId] = useState(null)
