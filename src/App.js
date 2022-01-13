@@ -30,9 +30,9 @@ export default function App() {
         setEditModalOpen(!editModalOpen)
     }
 
-    const deleteCat = (selectedCat, catData) => {
-        let filteredData = catData.filter(cat => cat.id !== selectedCat)
-        console.log(`Data after deleting cat ${selectedCat} is: ${JSON.stringify(filteredData, null, 4)}`);
+    const deleteCat = (selectedCatId, cd = catData ) => {
+        let filteredData = cd.filter(cat => cat.id !== selectedCatId)
+        // console.log(`Data after deleting cat ${selectedCatId} is: ${JSON.stringify(filteredData, null, 4)}`);
         setCatData(filteredData)
     }
 

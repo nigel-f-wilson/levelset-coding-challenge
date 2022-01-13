@@ -52,12 +52,13 @@ export function DetailPanel(props) {
                 toggleEditModal={toggleEditModal}
                 deleteCat={deleteCat}
                 validSelection={validSelection}
+                selectedCatId={selectedCatId}
             />
         </Box>
     )
 }
 function Buttons(props) {
-    let { toggleEditModal, deleteCat, validSelection } = props
+    let { toggleEditModal, deleteCat, validSelection, selectedCatId } = props
     
     let display = validSelection ? "flex" : "none"
     return (
@@ -78,6 +79,7 @@ function Buttons(props) {
             <Box sx={{ width: "0", height: "1.6rem", margin: "0.8rem 0.5rem", border: "solid black 1px" }} />
             <Button
                 children="Delete"
+                onClick={() => deleteCat(selectedCatId)}
             />
         </Box>
     )
