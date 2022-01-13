@@ -5,14 +5,11 @@ import { convertDateFormat } from "../lowLevelHelpers";
 
 
 // MUI components
-import { Box, Avatar, Typography } from '@mui/material'
-import { alog } from '@mui/material'
-import { List, ListItem } from '@mui/material'
-
+import { Box, Avatar, Typography, List } from '@mui/material'
 
 
 export function SummaryList(props) {
-    let { catData, viewCatDetails } = props
+    let { catList, viewCatDetails } = props
     return (
         <List sx={{
             height: "75%",
@@ -20,7 +17,7 @@ export function SummaryList(props) {
             overflowY: "scroll"
         }}>
             {
-                catData.map(cat => {
+                catList.map(cat => {
                     return (
                         <CatSummary
                             key={cat.id}
