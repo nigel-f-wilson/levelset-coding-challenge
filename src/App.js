@@ -7,8 +7,8 @@ import { DetailPanel } from "./components/DetailPanel"
 
 
 // MUI components
-import { Container, Box, Avatar, Grid, Typography } from '@mui/material'
-import { Dialog } from '@mui/material'
+import { Container, Box, Avatar, Grid, Typography,   } from '@mui/material'
+import { Dialog, Button, IconButton } from '@mui/material'
 
 // THEME
 import theme from "./theme"
@@ -161,10 +161,31 @@ function EditModal(props) {
                 // display: "flex",
                 // alignSelf: "center",
                 // margin: "auto 0"
-            }}>
-            
+        }}>
+            <Header />
+            {/* <Form /> */}
 
         </Dialog>
     )
+
+    function Header() {
+        return (
+            <Box sx={{
+                borderBottom: "solid #888 1px",
+                height: "4rem",
+                display: "flex", 
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "0 1rem"
+
+            }} >
+                <Typography variant="h5" children="Edit Cat" />
+                <IconButton 
+                    children={}
+                />
+
+            </Box>
+        )
+    }
 }
 
