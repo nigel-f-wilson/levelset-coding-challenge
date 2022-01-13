@@ -1,12 +1,12 @@
 import { React, useState,  useMemo } from 'react'
-import { catData } from "./catData";
 import { sourceCatData } from "./catData";
 
 import { AppBar } from "./components/AppBar"
+import { SummaryList } from "./components/SummaryList"
+
 // MUI components
 import { Container, Box, Avatar, Grid, Typography } from '@mui/material'
 import { Dialog } from '@mui/material'
-import { List, ListItem } from '@mui/material'
 
 // THEME
 import theme from "./theme"
@@ -17,15 +17,25 @@ let primary = theme.palette.primary.main
 
 export default function App() {
     const [catData, setCatData] = useState(sourceCatData)
+
+    
+    const [selectedCatId, setSelectedCatId] = useState(null)
+    
+    
     const [editModalOpen, setEditModalOpen] = useState(false)
-    // const [viewCounts, setViewCounts] = useState(new Map(catData.map()))  // AVOID using map because ids are unique and start from 1
 
     const toggleEditModal = (editModalOpen) => {
         setEditModalOpen(!editModalOpen)
     }
 
+    const deleteCat = (selectedCat, catData) => {
+        let filteredData = catData.filter(cat => cat.id !== selectedCat)
+        console.log(`Data after deleting cat ${selectedCat} is: ${JSON.stringify(filteredData, null, 4)}`);
+        setCatData(filteredData)
+    }
+
     const viewCatDetails = (catId) => {
-        setSelectedCat(catId)
+        setSelectedCatId(catId)
         console.log(`Setting selected cat to: ${catId}`);
     }
     
@@ -34,10 +44,24 @@ export default function App() {
     //     setNameSearchString(event.target.value.toLowerCase())
     // }
     
-    catData.forEach(cat => {
-        console.log(`DATA for cat number ${cat.id}: ${JSON.stringify(cat, null, 4)}`);
-    });
+    // catData.forEach(cat => {
+    //     console.log(`DATA for cat number ${cat.id}: ${JSON.stringify(cat, null, 4)}`);
+    // });
+
+    let catIds = catData.map(cat => cat.id)
+    console.log(`Cat IDS present: ${catIds}`);
     
+    let validSelection = catIds.includes(selectedCatId)
+    let selectedCatsData = (validSelection) ? getCatById(selectedCatId) : "Please Select a Cat"
+    console.log(`VALID selection: ${validSelection}`)
+    console.log(`DATA for SELECTED cat number ${selectedCatId}: ${JSON.stringify(selectedCatsData, null, 4)}`);
+
+    function getCatById(id) {
+        let cat = catData.filter(catObject => catObject.id === id)
+        console.assert(cat.length !== 1, `getCatById found more than one cat with id ${id}`)
+        return cat[0]
+        // console.log(`FOUND CAT with ID ${id}: ${JSON.stringify(cat, null, 4)}`);
+    }
   
     return (
         <ThemeProvider theme={theme}>
@@ -59,11 +83,16 @@ export default function App() {
                         height: "100%",
                         display: "flex"
                     }} >
-                    <Summary
+                    <Sidebar
+                        catData={catData}
                         viewCatDetails={viewCatDetails}
                     />
-                    <Detail 
-                        selectedCat={selectedCat}
+                    <DetailPanel 
+                        validSelection={validSelection}
+                        selectedCatId={selectedCatId}
+                        selectedCatsData={selectedCatsData}
+                        toggleEditModal={toggleEditModal}
+                        deleteCat={deleteCat}
                     />
                 </Container>
                 
@@ -75,8 +104,8 @@ export default function App() {
     )
 }
 
-function Summary(props) {
-    let { viewCatDetails } = props
+function Sidebar(props) {
+    let { catData, viewCatDetails } = props
     return (
         <Box sx={{
             flex: "0 1 35%",
@@ -85,10 +114,10 @@ function Summary(props) {
             flexDirection: "column",
         }}>
             <SearchBox  />
-            <ListOfCats 
+            <SummaryList 
+                catData={catData}
                 viewCatDetails={viewCatDetails}
             />
-            
         </Box>
     )
 }
@@ -107,22 +136,66 @@ function SearchBox() {
 }
 
 
+function DetailPanel(props) {
+    let { validSelection, selectedCatId, selectedCatsData, toggleEditModal, deleteCat } = props
+    let { name, thumbnail_url, birthdate, owner_name, views_count } = selectedCatsData
 
-
-function Detail(props) {
-    let { selectedCat } = props
+    let details = (validSelection) ? 
+    <Box sx={{ 
+        display: "flex", 
+        flexDirection: "column", 
+        border: "solid red 1px", 
+        width: "70%"  
+    }}>
+        <Box id="cat detail picture"
+            sx={{
+                paddingTop: "75%",
+                height: '0',
+                width: '100%',
+                backgroundImage: `url(${thumbnail_url})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+            }}
+        />
+        <Typography variant="h3" children={name} />
+        <Typography variant="h5" children={`Birthdate: ${birthdate}`} />
+        <Typography variant="h5" children={`Owner: ${owner_name}`} />
+        <Typography variant="h5" children={`Number of views: ${views_count} times`} />
+    </Box>
+    :
+    <Typography children="Please Select a cat" />
     
     
     return (
         <Box sx={{
+            border: "solid green 1px",
+
             flex: "0 0 65%",
             height: "100%",
             display: "flex", 
-            justifyContent: "center",
-            paddingTop: "4rem"
+            flexDirection: "column",  
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "4rem 0rem 2rem"
 
         }}>
-          THE SELECETED CAT IS {selectedCat}
+            { details }
+            <Buttons 
+                toggleEditModal={toggleEditModal}
+                deleteCat={deleteCat}
+            />
+        </Box>
+    )
+}
+function Buttons(props) {
+    return (
+        <Box
+            sx={{
+                border: "solid red 1px",
+                width: '6rem',
+                height: '6rem',
+            }}
+        >
         </Box>
     )
 }
