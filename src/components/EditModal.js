@@ -1,14 +1,34 @@
-import { React } from 'react'
+import { React, useState } from 'react'
 
 // MUI components
-import { Box, Typography, Dialog, Button, IconButton, Icon } from '@mui/material'
+import { Box, Typography, Dialog, Button, IconButton, TextField } from '@mui/material'
 import DatePicker from '@mui/lab/DatePicker';
 import CloseIcon from '@mui/icons-material/Close';
 
 export function EditModal(props) {
     let { open, selectedCatData, toggleEditModal } = props
-    
-    
+    // let { id, name, birthdate, owner_name, thumbnail_url } = selectedCatData
+
+    let [catData, setCatData] = useState({selectedCatData})
+
+    function updateLocalCatData() {
+        
+    }
+
+    // const handleUpdate = (todo) => {
+    //     setTodos({ ...todos, [todo.id]: todo });
+    // }
+    // const update = (value) => {
+    //     setCatData({ ...catData, [catData]: value });
+    // }
+    const updateName = (event) => {
+        setCatData({ ...catData, [catData.name]: event.target.value });
+    }
+
+    // COPIED
+    // function handleNameStringChange(event) {
+    //     setNameSearchString(event.target.value.toLowerCase())
+    // }
     
     return (
         <Dialog
@@ -29,8 +49,8 @@ export function EditModal(props) {
                 margin: "0"
             }}>
             <Header />
-            <Form 
-            />
+            <Form />
+            <SaveAndCancelButtons />
 
         </Dialog>
     )
@@ -46,7 +66,7 @@ export function EditModal(props) {
                 padding: "0 1rem"
 
             }} >
-                <Typography variant="h5" children="Edit Cat" />
+                <Typography variant="h4" children="Edit Cat" />
                 <IconButton
                     children={<CloseIcon />}
                     onClick={toggleEditModal}
@@ -54,53 +74,132 @@ export function EditModal(props) {
             </Box>
         )
     }
-
-    function Form(props) {
-        let {   } = props
-
+    function Form() {
         return (
             <Box sx={{
                 height: "550px",
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                alignItems: "center",
                 padding: "0 1rem"
-
             }} >
-                <Typography variant="h5" children="Edit Cat" />
-                <Buttons
-
+                <FormLabels />
+                <FormInputs 
+                    catData={catData}
                 />
             </Box>
         )
 
-        function Buttons(props) {
-            return (
-                <Box
-                    sx={{
-                        display: "flex",
-                        width: '100%',
-                        height: "75px",
-                        justifyContent: "flex-end",
-                        alignItems: "center",
-                        padding: "0 10%",
-                        borderTop: "solid #888 1px",
+        
+    }
+    function FormLabels() {
+        return (
+            <Box id="form_labels"
+                sx={{
+                    flex: "0 0 35%",
+                    paddingLeft: "2rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center"
+                }} >
+                <Typography
+                    variant="body1"
+                    children={"Thumbnail URL"}
+                />
+                <Typography
+                    variant="body1"
+                    children={"Name"}
+                />
+                <Typography
+                    variant="body1"
+                    children={"Birth date"}
+                />
+                <Typography
+                    variant="body1"
+                    children={"Owner"}
+                />
+            </Box>
+        )
+    }
+    function FormInputs(props) {
+        let { id, name, birthdate, owner_name, thumbnail_url } = props.catData
 
-                    }}
-                >
-                    <Button
-                        children="Save"
-                    // onClick={() => toggleEditModal()}
-                    />
-                    <Box sx={{ width: "0", height: "1.6rem", margin: "0.8rem 0.5rem", border: "solid black 1px" }} />
-                    <Button
-                        children="Cancel"
-                        onClick={toggleEditModal}
-                    />
-                </Box>
-            )
-        }
+        
+        console.log(`FORM INPUTS HAS DATA: ${JSON.stringify(catData, null, 4)}`);
+
+        console.log(`name VALUE should be set to: ${name}`);
+        
+        
+        return (
+            <Box id="form_Inputs"
+                sx={{
+                    flex: "1 1 65%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center"
+                }} >
+                <TextField
+                    value={thumbnail_url}
+                    variant="outlined"
+
+                />
+                <TextField
+                    value={name}
+                    onChange={updateName}
+                    variant="outlined"
+
+
+
+                />
+                {/* <DatePicker
+                        value={catData.birthdate}
+                        variant="outlined"
+                        onChange={}
+
+
+
+                    /> */}
+                <TextField
+                    value="Test"
+                    variant="outlined"
+
+
+
+                />
+                <TextField
+                    value="Test"
+                    variant="outlined"
+
+
+
+                />
+            </Box>
+        )
+    }
+
+    function SaveAndCancelButtons(props) {
+        return (
+            <Box
+                sx={{
+                    display: "flex",
+                    width: '100%',
+                    height: "75px",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    borderTop: "solid #888 1px",
+
+                }}
+            >
+                <Button
+                    children="Save"
+                // onClick={() => toggleEditModal()}
+                />
+                <Box sx={{ width: "0", height: "1.6rem", margin: "0.8rem 0.5rem", border: "solid black 1px" }} />
+                <Button
+                    children="Cancel"
+                    onClick={toggleEditModal}
+                    sx={{  paddingRight: "2rem", }}
+                />
+            </Box>
+        )
     }
 
 }
