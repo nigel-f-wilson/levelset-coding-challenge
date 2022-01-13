@@ -5,13 +5,13 @@ import { convertDateFormat } from "../lowLevelHelpers";
 import { Box, Typography, Button } from '@mui/material'
 
 export function DetailPanel(props) {
-    let { validSelection, selectedCatId, selectedCatData, toggleEditModal, deleteCat } = props
-    let { name, thumbnail_url, birthdate, owner_name, views_count } = selectedCatData
+    let { selectedCatData, toggleEditModal, deleteCat } = props
+    let { id, name, thumbnail_url, birthdate, owner_name, views_count } = selectedCatData
 
     // const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate])  
     const dateString = convertDateFormat(birthdate) 
 
-    let details = (validSelection) ?
+    let details = (selectedCatData.id) ?
         <Box sx={{
             display: "flex",
             flexDirection: "column",
@@ -51,16 +51,16 @@ export function DetailPanel(props) {
             <Buttons
                 toggleEditModal={toggleEditModal}
                 deleteCat={deleteCat}
-                validSelection={validSelection}
-                selectedCatId={selectedCatId}
+                selectedCatId={id}
+                selectedCatData={selectedCatData}
             />
         </Box>
     )
 }
 function Buttons(props) {
-    let { toggleEditModal, deleteCat, validSelection, selectedCatId } = props
+    let { toggleEditModal, deleteCat, selectedCatData } = props
     
-    let display = validSelection ? "flex" : "none"
+    let display = (selectedCatData.id) ? "flex" : "none"
     return (
         <Box 
             sx={{
@@ -79,7 +79,7 @@ function Buttons(props) {
             <Box sx={{ width: "0", height: "1.6rem", margin: "0.8rem 0.5rem", border: "solid black 1px" }} />
             <Button
                 children="Delete"
-                onClick={() => deleteCat(selectedCatId)}
+                onClick={() => deleteCat(selectedCatData.id)}
             />
         </Box>
     )
