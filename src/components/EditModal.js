@@ -2,6 +2,7 @@ import { React } from 'react'
 
 // MUI components
 import { Box, Typography, Dialog, Button, IconButton, Icon } from '@mui/material'
+import DatePicker from '@mui/lab/DatePicker';
 import CloseIcon from '@mui/icons-material/Close';
 
 export function EditModal(props) {
