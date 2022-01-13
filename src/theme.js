@@ -50,7 +50,12 @@ const theme = createTheme({
         
     },
     typography: {
-        
+        h3: {
+            padding: "1rem"
+        },
+        h5: {
+            padding: "0.2rem 1rem"
+        }
 
     },
     transitions: {
