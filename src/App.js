@@ -3,6 +3,8 @@ import { sourceCatData } from "./catData";
 
 import { AppBar } from "./components/AppBar"
 import { SummaryList } from "./components/SummaryList"
+import { DetailPanel } from "./components/DetailPanel"
+
 
 // MUI components
 import { Container, Box, Avatar, Grid, Typography } from '@mui/material'
@@ -136,69 +138,6 @@ function SearchBox() {
 }
 
 
-function DetailPanel(props) {
-    let { validSelection, selectedCatId, selectedCatsData, toggleEditModal, deleteCat } = props
-    let { name, thumbnail_url, birthdate, owner_name, views_count } = selectedCatsData
-
-    let details = (validSelection) ? 
-    <Box sx={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        border: "solid red 1px", 
-        width: "70%"  
-    }}>
-        <Box id="cat detail picture"
-            sx={{
-                paddingTop: "75%",
-                height: '0',
-                width: '100%',
-                backgroundImage: `url(${thumbnail_url})`,
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-            }}
-        />
-        <Typography variant="h3" children={name} />
-        <Typography variant="h5" children={`Birthdate: ${birthdate}`} />
-        <Typography variant="h5" children={`Owner: ${owner_name}`} />
-        <Typography variant="h5" children={`Number of views: ${views_count} times`} />
-    </Box>
-    :
-    <Typography children="Please Select a cat" />
-    
-    
-    return (
-        <Box sx={{
-            border: "solid green 1px",
-
-            flex: "0 0 65%",
-            height: "100%",
-            display: "flex", 
-            flexDirection: "column",  
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "4rem 0rem 2rem"
-
-        }}>
-            { details }
-            <Buttons 
-                toggleEditModal={toggleEditModal}
-                deleteCat={deleteCat}
-            />
-        </Box>
-    )
-}
-function Buttons(props) {
-    return (
-        <Box
-            sx={{
-                border: "solid red 1px",
-                width: '6rem',
-                height: '6rem',
-            }}
-        >
-        </Box>
-    )
-}
 
 function EditModal(props) {
     let { open } = props
