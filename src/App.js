@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState,  useMemo } from 'react'
 import { catData } from "./catData";
 
 import { AppBar } from "./components/AppBar"
@@ -109,8 +109,7 @@ function ListOfCats(props) {
 function CatSummary(props) {
     let { name, birthdate, owner_name, thumbnail_url } = props.cat
     
-    let dateString = convertDateFormat(birthdate)
-    
+    const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate]);
     
     return (
         <Box 
