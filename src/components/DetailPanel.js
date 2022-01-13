@@ -5,8 +5,8 @@ import { convertDateFormat } from "../lowLevelHelpers";
 import { Box, Typography, Button } from '@mui/material'
 
 export function DetailPanel(props) {
-    let { validSelection, selectedCatId, selectedCatsData, toggleEditModal, deleteCat } = props
-    let { name, thumbnail_url, birthdate, owner_name, views_count } = selectedCatsData
+    let { validSelection, selectedCatId, selectedCatData, toggleEditModal, deleteCat } = props
+    let { name, thumbnail_url, birthdate, owner_name, views_count } = selectedCatData
 
     // const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate])  
     const dateString = convertDateFormat(birthdate) 

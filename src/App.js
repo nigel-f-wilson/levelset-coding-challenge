@@ -4,6 +4,7 @@ import { sourceCatData } from "./catData";
 import { AppBar } from "./components/AppBar"
 import { SummaryList } from "./components/SummaryList"
 import { DetailPanel } from "./components/DetailPanel"
+import { EditModal } from "./components/EditModal";
 
 
 // MUI components
@@ -54,9 +55,9 @@ export default function App() {
     console.log(`Cat IDS present: ${catIds}`);
     
     let validSelection = catIds.includes(selectedCatId)
-    let selectedCatsData = (validSelection) ? getCatById(selectedCatId) : "Please Select a Cat"
+    let selectedCatData = (validSelection) ? getCatById(selectedCatId) : "Please Select a Cat"
     console.log(`VALID selection: ${validSelection}`)
-    console.log(`DATA for SELECTED cat number ${selectedCatId}: ${JSON.stringify(selectedCatsData, null, 4)}`);
+    console.log(`DATA for SELECTED cat number ${selectedCatId}: ${JSON.stringify(selectedCatData, null, 4)}`);
 
     function getCatById(id) {
         let cat = catData.filter(catObject => catObject.id === id)
@@ -91,7 +92,7 @@ export default function App() {
                     <DetailPanel 
                         validSelection={validSelection}
                         selectedCatId={selectedCatId}
-                        selectedCatsData={selectedCatsData}
+                        selectedCatData={selectedCatData}
                         toggleEditModal={toggleEditModal}
                         deleteCat={deleteCat}
                     />
@@ -100,6 +101,8 @@ export default function App() {
                 <EditModal 
                     open={editModalOpen}
                     toggleEditModal={toggleEditModal}
+                    selectedCatData={selectedCatData}
+
                 />
             </Box>
         </ThemeProvider>
@@ -137,55 +140,4 @@ function SearchBox() {
     )
 }
 
-
-
-function EditModal(props) {
-    let { open, toggleEditModal } = props
-    return (
-        <Dialog 
-            open={open}
-            onClose={toggleEditModal}
-            PaperProps={{
-                sx: {
-                    width: "1000px",
-                    height: "625px",
-                    borderRadius: 4
-                }
-
-            }}
-            sx={{
-                
-
-                // backgroundColor: "#f3f",
-                // position: "absolute",
-                // display: "flex",
-                // alignSelf: "center",
-                // margin: "auto 0"
-        }}>
-            <Header />
-            {/* <Form /> */}
-
-        </Dialog>
-    )
-
-    function Header() {
-        return (
-            <Box sx={{
-                borderBottom: "solid #888 1px",
-                height: "4rem",
-                display: "flex", 
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "0 1rem"
-
-            }} >
-                <Typography variant="h5" children="Edit Cat" />
-                <IconButton 
-                    children={}
-                />
-
-            </Box>
-        )
-    }
-}
 
