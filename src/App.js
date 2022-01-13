@@ -15,13 +15,23 @@ let primary = theme.palette.primary.main
 
 
 export default function App() {
-    const [selectedCatIds, setSelectedCatIds] = useState([])
+    const [selectedCat, setSelectedCat] = useState()
     const [editModalOpen, setEditModalOpen] = useState(false)
+    // const [viewCounts, setViewCounts] = useState(new Map(catData.map()))  // AVOID using map because ids are unique and start from 1
 
     const toggleEditModal = (editModalOpen) => {
         setEditModalOpen(!editModalOpen)
     }
+
+    const viewCatDetails = (event) => {
+        setSelectedCat(event.target.value)
+        console.log(`Setting selected cat to: ${event.target.value}`);
+    }
     
+    // COPIED
+    // function handleNameStringChange(event) {
+    //     setNameSearchString(event.target.value.toLowerCase())
+    // }
     
     catData.forEach(cat => {
         console.log(`DATA for cat number ${cat.id}: ${JSON.stringify(cat, null, 4)}`);
