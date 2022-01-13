@@ -1,4 +1,4 @@
-import { React, useState,  useMemo } from 'react'
+import { React, useState, useEffect, useMemo } from 'react'
 import { sourceCatData } from "./catData";
 
 import { AppBar } from "./components/AppBar"
@@ -21,9 +21,7 @@ let primary = theme.palette.primary.main
 export default function App() {
     const [catList, setCatList] = useState(sourceCatData)
 
-    
-    const [selectedCatId, setSelectedCatId] = useState(null)
-    
+    const [selectedCatData, setSelectedCatData] = useState({})
     
     const [editModalOpen, setEditModalOpen] = useState(false)
 
@@ -31,39 +29,67 @@ export default function App() {
         setEditModalOpen(!editModalOpen)
     }
 
-    const deleteCat = (selectedCatId, cd = catData ) => {
-        let filteredData = cd.filter(cat => cat.id !== selectedCatId)
-        // console.log(`Data after deleting cat ${selectedCatId} is: ${JSON.stringify(filteredData, null, 4)}`);
-        setCatData(filteredData)
+    const deleteCat = (selectedCatId, cl = catList ) => {
+        let filteredList = cl.filter(cat => cat.id !== selectedCatId)
+        // console.log(`List after deleting cat ${selectedCatId} is: ${JSON.stringify(filteredList, null, 4)}`);
+        setCatList(filteredList)
+    }
+
+    const saveUpdates = () => {
+        console.log(`SAVE CLICKED`);
     }
 
     const viewCatDetails = (catId) => {
-        setSelectedCatId(catId)
+        incrementViewCount(catId)
+        
+        setSelectedCatData(getCatDataById(catId))
         console.log(`Setting selected cat to: ${catId}`);
     }
+
+
+    const incrementViewCount = (catId) => {
+        let prevCount = getCatDataById(catId).views_count
+        let index = getIndexInList(catId)
+        let updatedCatList = [...catList]
+        updatedCatList[index].views_count = ++prevCount
+        setCatList(updatedCatList)
+    }
+    const getIndexInList = (catId) => {
+        for (let i = 0; i < catList.length; i++) {
+            if (catList[i].id === catId) {
+                return i
+            }
+        }
+    }
+    
+    function getCatDataById(id) {
+        let cat = catList.filter(catObject => catObject.id === id)
+        console.assert(cat.length === 1, `getCatById found more than one cat with id ${id} --> ${JSON.stringify(cat, null, 4)}`)
+        return cat[0]
+    }
+
     
     // COPIED
     // function handleNameStringChange(event) {
     //     setNameSearchString(event.target.value.toLowerCase())
     // }
     
-    // catData.forEach(cat => {
-    //     console.log(`DATA for cat number ${cat.id}: ${JSON.stringify(cat, null, 4)}`);
-    // });
+    // useEffect(() => {
+    //     let catIds = catData.map(cat => cat.id)
+    //     let validSelection = catIds.includes(selectedCatId)
+    //     let selectedCatData = (validSelection) ? getCatById(selectedCatId) : "Please Select a Cat"
 
-    let catIds = catData.map(cat => cat.id)
-    console.log(`Cat IDS present: ${catIds}`);
+    // }, [selectedCatId])
     
-    let validSelection = catIds.includes(selectedCatId)
-    let selectedCatData = (validSelection) ? getCatById(selectedCatId) : "Please Select a Cat"
-    console.log(`VALID selection: ${validSelection}`)
-    console.log(`DATA for SELECTED cat number ${selectedCatId}: ${JSON.stringify(selectedCatData, null, 4)}`);
+    
+    // let catIds = catData.map(cat => cat.id)
+    // let validSelection = catIds.includes(selectedCatId)
+    // let selectedCatData = (validSelection) ? getCatById(selectedCatId) : "Please Select a Cat"
+    // console.log(`Cat IDS present: ${catIds}`);
+    // console.log(`VALID selection: ${validSelection}`)
+    // console.log(`DATA for SELECTED cat number ${selectedCatId}: ${JSON.stringify(selectedCatData, null, 4)}`);
 
-    function getCatById(id) {
-        let cat = catData.filter(catObject => catObject.id === id)
-        console.assert(cat.length === 1, `getCatById found more than one cat with id ${id} --> ${JSON.stringify(cat, null, 4)}`)
-        return cat[0]
-    }
+    
   
     return (
         <ThemeProvider theme={theme}>
@@ -86,12 +112,10 @@ export default function App() {
                         display: "flex"
                     }} >
                     <Sidebar
-                        catData={catData}
+                        catList={catList}
                         viewCatDetails={viewCatDetails}
                     />
                     <DetailPanel 
-                        validSelection={validSelection}
-                        selectedCatId={selectedCatId}
                         selectedCatData={selectedCatData}
                         toggleEditModal={toggleEditModal}
                         deleteCat={deleteCat}
@@ -110,7 +134,7 @@ export default function App() {
 }
 
 function Sidebar(props) {
-    let { catData, viewCatDetails } = props
+    let { catList, viewCatDetails } = props
     return (
         <Box sx={{
             flex: "0 1 35%",
@@ -120,7 +144,7 @@ function Sidebar(props) {
         }}>
             <SearchBox  />
             <SummaryList 
-                catData={catData}
+                catList={catList}
                 viewCatDetails={viewCatDetails}
             />
         </Box>
