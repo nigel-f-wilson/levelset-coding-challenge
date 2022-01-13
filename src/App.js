@@ -100,6 +100,7 @@ export default function App() {
                 
                 <EditModal 
                     open={editModalOpen}
+                    toggleEditModal={toggleEditModal}
                 />
             </Box>
         </ThemeProvider>
@@ -140,42 +141,31 @@ function SearchBox() {
 
 
 function EditModal(props) {
-    let { open } = props
+    let { open, toggleEditModal } = props
     return (
-        
-        // <Box sx={{
-        //     width: "100vw",
-        //     height: "100vh",
-        //     position: "absolute",
-        //     display: 'flex',
-        //     justifyContent: "center",
-        //     alignItems: "center"
+        <Dialog 
+            open={open}
+            onClose={toggleEditModal}
+            PaperProps={{
+                sx: {
+                    width: "1000px",
+                    height: "625px",
+                    borderRadius: 4
+                }
 
-
-        // }}>
-            <Dialog 
-                open={open}
-                PaperProps={{
-                    sx: {
-                        width: "1000px",
-                        height: "625px",
-                        borderRadius: 4
-                    }
-
-                }}
-                sx={{
-                    
-
-                    // backgroundColor: "#f3f",
-                    // position: "absolute",
-                    // display: "flex",
-                    // alignSelf: "center",
-                    // margin: "auto 0"
-                }}>
+            }}
+            sx={{
                 
 
-            </Dialog>
-        // </Box>
+                // backgroundColor: "#f3f",
+                // position: "absolute",
+                // display: "flex",
+                // alignSelf: "center",
+                // margin: "auto 0"
+            }}>
+            
+
+        </Dialog>
     )
 }
 
