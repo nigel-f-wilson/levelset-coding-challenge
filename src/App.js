@@ -60,9 +60,8 @@ export default function App() {
 
     function getCatById(id) {
         let cat = catData.filter(catObject => catObject.id === id)
-        console.assert(cat.length !== 1, `getCatById found more than one cat with id ${id}`)
+        console.assert(cat.length === 1, `getCatById found more than one cat with id ${id} --> ${JSON.stringify(cat, null, 4)}`)
         return cat[0]
-        // console.log(`FOUND CAT with ID ${id}: ${JSON.stringify(cat, null, 4)}`);
     }
   
     return (
