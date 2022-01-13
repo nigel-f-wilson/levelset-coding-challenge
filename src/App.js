@@ -23,9 +23,9 @@ export default function App() {
         setEditModalOpen(!editModalOpen)
     }
 
-    const viewCatDetails = (event) => {
-        setSelectedCat(event.target.value)
-        console.log(`Setting selected cat to: ${event.target.value}`);
+    const viewCatDetails = (catId) => {
+        setSelectedCat(catId)
+        console.log(`Setting selected cat to: ${catId}`);
     }
     
     // COPIED
@@ -58,8 +58,12 @@ export default function App() {
                         height: "100%",
                         display: "flex"
                     }} >
-                    <Summary />
-                    <Detail />
+                    <Summary
+                        viewCatDetails={viewCatDetails}
+                    />
+                    <Detail 
+                        selectedCat={selectedCat}
+                    />
                 </Container>
                 
                 <EditModal 
@@ -71,6 +75,7 @@ export default function App() {
 }
 
 function Summary(props) {
+    let { viewCatDetails } = props
     return (
         <Box sx={{
             flex: "0 1 35%",
@@ -79,7 +84,9 @@ function Summary(props) {
             flexDirection: "column",
         }}>
             <SearchBox  />
-            <ListOfCats />
+            <ListOfCats 
+                viewCatDetails={viewCatDetails}
+            />
             
         </Box>
     )
@@ -98,6 +105,7 @@ function SearchBox() {
     )
 }
 function ListOfCats(props) {
+    let { viewCatDetails } = props
     return (
         <List sx={{
             height: "75%",
@@ -108,7 +116,11 @@ function ListOfCats(props) {
             {
                 catData.map(cat => {
                     return (
-                        <CatSummary key={cat.id} cat={cat} />
+                        <CatSummary 
+                            key={cat.id} 
+                            cat={cat} 
+                            viewCatDetails={viewCatDetails}
+                        />
                     )
                 })
             }
@@ -117,12 +129,16 @@ function ListOfCats(props) {
     )
 }
 function CatSummary(props) {
-    let { name, birthdate, owner_name, thumbnail_url } = props.cat
+    let { cat, viewCatDetails } = props
+    let { id, name, birthdate, owner_name, thumbnail_url } = cat
+
+
     
-    const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate]);
+    const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate]);  // Could doing something simlar to Memoize the Avatar component improve performance vs. just passing it the url and asking it to refetch that image on every render. Is that what is currently happening? 
     
     return (
         <Box 
+            onClick={() => viewCatDetails(id)}
             sx={{
             // height: "25vh",
             border: `solid ${primary} 1px`,
@@ -153,12 +169,19 @@ function CatSummary(props) {
 
 
 function Detail(props) {
+    let { selectedCat } = props
+    
+    
     return (
         <Box sx={{
             flex: "0 0 65%",
-            backgroundColor: "#33f",
             height: "100%",
+            display: "flex", 
+            justifyContent: "center",
+            paddingTop: "4rem"
+
         }}>
+          THE SELECETED CAT IS {selectedCat}
         </Box>
     )
 }
