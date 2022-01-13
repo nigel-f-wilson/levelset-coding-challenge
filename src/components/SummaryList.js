@@ -62,7 +62,7 @@ function CatSummary(props) {
                         height: '6rem',
                     }}
                 />
-                <Typography variant="h3" children={name} sx={{ padding: "1rem" }} />
+                <Typography variant="h3" children={name}  />
 
             </Box>
             <Typography variant="h5" children={dateString} sx={{ padding: "1rem 1rem 0rem" }} />
@@ -82,6 +82,6 @@ function convertDateFormat(inputDate) {
     let month = monthList[(monthNumber - 1)]
     let day = Number(inputDate.slice(secondHyphen + 1))
     let date = `${day} ${month} ${year}`
-    console.log(`DATE: ${date}`);
+    // console.log(`DATE: ${date}`);
     return date
 }
