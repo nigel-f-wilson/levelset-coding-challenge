@@ -75,7 +75,7 @@ function Buttons(props) {
                 children="Edit"
                 onClick={() => toggleEditModal()}
             />
-            <Box sx={{ width: "0", height: "1.6rem", marginTop: "0.8rem", border: "solid black 1px" }} />
+            <Box sx={{ width: "0", height: "1.6rem", margin: "0.8rem 0.5rem", border: "solid black 1px" }} />
             <Button
                 children="Delete"
             />
