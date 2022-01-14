@@ -4,7 +4,7 @@ import { Box, TextField } from '@mui/material'
 
 import { useTheme } from '@mui/styles';
 
-export function Sidebar(props) {
+export function SideBar(props) {
     let { searchString, handleSearchStringChange, catList, viewCatDetails } = props
     return (
         <Box sx={{
@@ -33,7 +33,7 @@ function SearchBox(props) {
     return (
         <Box sx={{
             height: "25%",
-            border: `solid ${primary.main} 1px`,
+            border: `solid ${primary} 1px`,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

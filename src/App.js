@@ -51,9 +51,7 @@ export default function App() {
         setSelectedCatData({})
     }
 
-    const saveUpdates = () => {
-        console.log(`SAVE CLICKED`);
-    }
+    
 
     const viewCatDetails = (catId) => {
         incrementViewCount(catId)
@@ -113,7 +111,7 @@ export default function App() {
                         display: "flex"
                     }} 
                 >
-                    <Sidebar
+                    <SideBar
                         searchString={searchString}
                         handleSearchStringChange={handleSearchStringChange}
                         catList={catList}
@@ -131,7 +129,7 @@ export default function App() {
                     open={editModalOpen}
                     toggleEditModal={toggleEditModal}
                     selectedCatData={selectedCatData}
-
+                    saveUpdates={saveUpdates}
 
                 />
                 <ConfirmDeleteModal
@@ -146,58 +144,4 @@ export default function App() {
 
     
 }
-function Sidebar(props) {
-    let { searchString, handleSearchStringChange, catList, viewCatDetails } = props
-    return (
-        <Box sx={{
-            width: "35%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-        }}>
-            <SearchBox
-                searchString={searchString}
-                handleSearchStringChange={handleSearchStringChange}
-            />
-            <SummaryList
-                catList={catList}
-                viewCatDetails={viewCatDetails}
-                searchString={searchString}
-            />
-        </Box>
-    )
-}
 
-function SearchBox(props) {
-    let { searchString, handleSearchStringChange } = props
-
-    return (
-        <Box sx={{
-            height: "25%",
-            border: `solid ${primary} 1px`,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            
-        }}>
-
-            <TextField
-                autoFocus
-                key="name-search"
-                id="name-search"
-                value={searchString}
-                onChange={handleSearchStringChange}
-                autoComplete='off'
-                placeholder="Search by name"
-                type="search"
-                variant="outlined"
-                sx={{ width: "80%" }}
-                InputProps={{
-                    sx: {
-                        fontSize: "1.1rem",
-                    }
-                }}
-            />
-        </Box>
-    )
-}
