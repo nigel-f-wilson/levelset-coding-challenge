@@ -9,14 +9,16 @@ import { convertDateFormat } from "../lowLevelHelpers";
 
 export function EditModal(props) {
     let { open, selectedCatData, toggleEditModal, saveUpdates } = props
-    // let { id, thumbnail_url, name, birthdate, owner_name } = selectedCatData
+    let { id, thumbnail_url, name, birthdate, owner_name } = selectedCatData
     
-    let [formName, setFormName] = useState(selectedCatData.name)
-    let [formUrl, setFormUrl] = useState(selectedCatData.thumbnail_url)
-    let [formBirthdate, setFormBirthdate] = useState(selectedCatData.birthdate)
-    let [formOwner, setFormOwner] = useState(selectedCatData.owner_name)
+    console.log(`EditModal has selectedCatData: ${JSON.stringify(selectedCatData, null, 4)}`)
 
-    console.log(`EditModal has name: ${selectedCatData.name}`)
+    let [formName, setFormName] = useState(name)
+    let [formUrl, setFormUrl] = useState(thumbnail_url)
+    let [formBirthdate, setFormBirthdate] = useState(birthdate)
+    let [formOwner, setFormOwner] = useState(owner_name)
+
+    console.log(`EditModal has name: ${name}`)
     console.log(`EditModal has formName: ${formName}`)
     // console.log(`EditModal has thumbnail_url: ${selectedCatData.thumbnail_url}`)
     // console.log(`EditModal has formUrl: ${formUrl}`)
@@ -24,7 +26,7 @@ export function EditModal(props) {
     const updateName = (event) => {
         setFormName(event.target.value)
     }
-    const updateURL = (event) => {
+    const updateUrl = (event) => {
         setFormUrl(event.target.value)
     }
     const updateBirthdate = (event) => {
@@ -34,7 +36,6 @@ export function EditModal(props) {
         setFormOwner(event.target.value)
     }
     
-
     return (
         <Dialog
             open={open}
@@ -55,10 +56,20 @@ export function EditModal(props) {
                 saveUpdates={saveUpdates}
                 toggleEditModal={toggleEditModal}
 
+                
+                name={name}
+                thumbnail_url={thumbnail_url}
+                birthdate={birthdate}
+                owner_name={owner_name}
+                
+                formName={formName}
                 formUrl={formUrl}
+                formBirthdate={formBirthdate}
+                formOwner={formOwner}
+
 
                 updateName={updateName}
-                updateURL={updateURL}
+                updateUrl={updateUrl}
                 updateBirthdate={updateBirthdate}
                 updateOwner={updateOwner}
 
@@ -88,9 +99,20 @@ function Header(props) {
     )
 }
 function Form(props) {
-    let { formUrl,  editedCat, saveUpdates, toggleEditModal, updateName,
-    updateURL, updateBirthdate, updateOwner } = props
+    let { 
+        thumbnail_url, name, birthdate, owner_name, 
+        formName,
+        formUrl, 
+        formBirthdate, 
+        formOwner, 
+        saveUpdates, 
+        toggleEditModal, 
+        updateName,
+        updateUrl, 
+        updateBirthdate, 
+        updateOwner } = props
 
+    console.log(`Form has formName: ${formName}`);
     console.log(`Form has formUrl: ${formUrl}`);
 
 
@@ -100,34 +122,34 @@ function Form(props) {
             display: "flex",
             flexDirection: "column"
         }} >
-            {/* <Box sx={{
-                height: "550px",
-                display: "flex",
-                padding: "0 1rem"
-            }} >
-                <FormLabels />
-                <FormInputs
-                    editedCat={editedCat}
-                    updateName={updateName}
-                    updateURL={updateURL}
-                    updateBirthdate={updateBirthdate}
-                    updateOwner={updateOwner}
-                />
-            </Box> */}
             
             <UrlInput 
+                thumbnail_url={thumbnail_url}
                 formUrl={formUrl}
-                updateURL={updateURL}
+                updateUrl={updateUrl}
             />
-            <FormRow>
-
-            </FormRow>
+            <NameInput
+                name={name}
+                formName={formUrl}
+                updateName={updateName}
+            />
+            <BirthdateInput
+                formBirthdate={formBirthdate}
+                updateBirthdate={updateBirthdate}
+            />
+            <OwnerInput
+                formOwner={formOwner}
+                updateOwner={updateOwner}
+            />
 
 
             <SaveAndCancelButtons 
                 saveUpdates={saveUpdates} 
-                editedCat={editedCat} 
-                toggleEditModal={toggleEditModal}       
+                toggleEditModal={toggleEditModal}    
+                formName={formName}
+                formUrl={formUrl}
+                formBirthdate={formBirthdate} 
+                formOwner={formOwner}    
             />
         </Box>
     )
@@ -149,9 +171,9 @@ function FormRow(props) {
     )
 }
 function UrlInput(props) {
-    let { formUrl, updateURL } = props
+    let { formUrl, updateUrl } = props
 
-    console.log(`UrlInput has formUrl: ${formUrl}`);
+    console.log(`UrlInput has formUrl: ${formUrl} and update function: ${updateUrl}`);
     return (
         <FormRow>
             <Typography
@@ -162,7 +184,64 @@ function UrlInput(props) {
             <TextField
                 value={formUrl}
                 variant="outlined"
-                onChange={(e) => updateURL(e)}
+                onChange={(e) => updateUrl(e)}
+            />
+        </FormRow>
+    )
+}
+function NameInput(props) {
+    let { name, formName, updateName  } = props
+
+    console.log(`NameInput has formName: ${name}`);
+    return (
+        <FormRow>
+            <Typography
+                variant="body1"
+                children={"Name"}
+                sx={{ width: "40%" }}
+            />
+            <TextField
+                value={name}
+                variant="outlined"
+                onChange={(e) => updateName(e)}
+            />
+        </FormRow>
+    )
+}
+function BirthdateInput(props) {
+    let { formBirthdate, updateBirthdate } = props
+
+    console.log(`BirthdateInput has formBirthdate: ${formBirthdate}`);
+    return (
+        <FormRow>
+            <Typography
+                variant="body1"
+                children={"Birthdate"}
+                sx={{ width: "40%" }}
+            />
+            <TextField
+                value={formBirthdate}
+                variant="outlined"
+                onChange={(e) => updateBirthdate(e)}
+            />
+        </FormRow>
+    )
+}
+function OwnerInput(props) {
+    let { formOwner, updateOwner } = props
+
+    console.log(`OwnerInput has formOwner: ${formOwner}`);
+    return (
+        <FormRow>
+            <Typography
+                variant="body1"
+                children={"Thumbnail URL"}
+                sx={{ width: "40%" }}
+            />
+            <TextField
+                value={formOwner}
+                variant="outlined"
+                onChange={(e) => updateOwner(e)}
             />
         </FormRow>
     )
