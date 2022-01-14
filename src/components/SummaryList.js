@@ -39,7 +39,7 @@ function CatSummary(props) {
     let display = (nameIncludesSearchString(name, searchString)) ? 'flex' : 'none'
     function nameIncludesSearchString(name, searchString) {
         let includes = name.toLowerCase().includes(searchString.toLowerCase())
-        console.log(`Name ${name} ${includes ? "DOES" : "does NOT"} include search string ${searchString} `);
+        // console.log(`Name ${name} ${includes ? "DOES" : "does NOT"} include search string ${searchString} `);
         return includes
     }
 
