@@ -3,6 +3,7 @@ import { sourceCatData } from "./catData";
 
 import { AppBar } from "./components/AppBar"
 import { SummaryList } from "./components/SummaryList"
+import { SideBar } from "./components/SideBar"
 import { DetailPanel } from "./components/DetailPanel"
 import { EditModal } from "./components/EditModal";
 import { ConfirmDeleteModal } from "./components/ConfirmDeleteModal";
@@ -10,6 +11,8 @@ import { ConfirmDeleteModal } from "./components/ConfirmDeleteModal";
 
 // MUI components
 import { Container, Box } from '@mui/material'
+import { TextField } from '@mui/material'
+
 
 // THEME
 import theme from "./theme"
@@ -20,8 +23,13 @@ let primary = theme.palette.primary.main
 
 export default function App() {
     const [catList, setCatList] = useState(sourceCatData)
-
     const [selectedCatData, setSelectedCatData] = useState({})
+
+    const [searchString, setSearchString] = useState("")
+    function handleSearchStringChange(event) {
+        setSearchString(event.target.value.toLowerCase())
+        console.log(`SEARCH STRING UPDATED to: ${event.target.value} `);
+    }
     
     const [editModalOpen, setEditModalOpen] = useState(false)
     const toggleEditModal = (editModalOpen) => {
@@ -74,18 +82,6 @@ export default function App() {
     }
 
     
-    // COPIED
-    // function handleNameStringChange(event) {
-    //     setNameSearchString(event.target.value.toLowerCase())
-    // }
-    
-    // useEffect(() => {
-    //     let catIds = catData.map(cat => cat.id)
-    //     let validSelection = catIds.includes(selectedCatId)
-    //     let selectedCatData = (validSelection) ? getCatById(selectedCatId) : "Please Select a Cat"
-
-    // }, [selectedCatId])
-    
     
     // let catIds = catData.map(cat => cat.id)
     // let validSelection = catIds.includes(selectedCatId)
@@ -115,8 +111,11 @@ export default function App() {
                     sx={{
                         height: "100%",
                         display: "flex"
-                    }} >
+                    }} 
+                >
                     <Sidebar
+                        searchString={searchString}
+                        handleSearchStringChange={handleSearchStringChange}
                         catList={catList}
                         viewCatDetails={viewCatDetails}
                     />
@@ -144,37 +143,61 @@ export default function App() {
             </Box>
         </ThemeProvider>
     )
-}
 
+    
+}
 function Sidebar(props) {
-    let { catList, viewCatDetails } = props
+    let { searchString, handleSearchStringChange, catList, viewCatDetails } = props
     return (
         <Box sx={{
-            flex: "0 1 35%",
+            width: "35%",
             height: "100%",
             display: "flex",
             flexDirection: "column",
         }}>
-            <SearchBox  />
-            <SummaryList 
+            <SearchBox
+                searchString={searchString}
+                handleSearchStringChange={handleSearchStringChange}
+            />
+            <SummaryList
                 catList={catList}
                 viewCatDetails={viewCatDetails}
+                searchString={searchString}
             />
         </Box>
     )
 }
-function SearchBox() {
+
+function SearchBox(props) {
+    let { searchString, handleSearchStringChange } = props
+
     return (
         <Box sx={{
             height: "25%",
             border: `solid ${primary} 1px`,
-
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             
         }}>
 
-
+            <TextField
+                autoFocus
+                key="name-search"
+                id="name-search"
+                value={searchString}
+                onChange={handleSearchStringChange}
+                autoComplete='off'
+                placeholder="Search by name"
+                type="search"
+                variant="outlined"
+                sx={{ width: "80%" }}
+                InputProps={{
+                    sx: {
+                        fontSize: "1.1rem",
+                    }
+                }}
+            />
         </Box>
     )
 }
-
-
