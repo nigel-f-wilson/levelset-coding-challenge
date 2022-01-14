@@ -187,7 +187,7 @@ function OwnerInput(props) {
         <FormRow>
             <Typography
                 variant="body1"
-                children={"Thumbnail URL"}
+                children={"Owner"}
                 sx={{ width: "40%" }}
             />
             <TextField
