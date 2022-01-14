@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import { sourceCatData } from "./catData";
 
 import { AppBar } from "./components/AppBar"
@@ -16,8 +16,18 @@ import { ThemeProvider } from '@mui/material'
 
 export default function App() {
     const [catList, setCatList] = useState(sourceCatData)
+    
+    
     const [selectedCatData, setSelectedCatData] = useState({})
 
+    // useEffect(() => {
+    //     console.log(`selectedCatData: ${selectedCatData}`);
+    //     // setState(num);
+    // }, [selectedCatData]);
+
+
+
+    
     const [searchString, setSearchString] = useState("")
     function handleSearchStringChange(event) {
         setSearchString(event.target.value.toLowerCase())
@@ -28,8 +38,21 @@ export default function App() {
     const toggleEditModal = (editModalOpen) => {
         setEditModalOpen(!editModalOpen)
     }
-    const saveUpdates = (event) => {
-        console.log(`SAVE CLICKED    EVENT: ${JSON.stringify(event, null, 4)}`);
+    const closeEditModal = () => {
+        console.log("Close Edit Modal Called");
+        setEditModalOpen(false)
+    }
+
+    const saveUpdates = (updatedCatData, cl = catList) => {
+        console.log(`SAVE CLICKED`);
+        console.log(`updatedCatData: ${JSON.stringify(updatedCatData, null, 4)}`);
+
+        let idOfCatToUpdate = updatedCatData.id
+        let index = getIndexInList(idOfCatToUpdate)
+        let updatedCatList = [...cl]
+        updatedCatList[index] = updatedCatData
+        setCatList(updatedCatList)
+        closeEditModal()
     }
 
     
@@ -110,7 +133,7 @@ export default function App() {
                     toggleEditModal={toggleEditModal}
                     selectedCatData={selectedCatData}
                     saveUpdates={saveUpdates}
-
+                    closeEditModal={closeEditModal}
                 />
                 <ConfirmDeleteModal
                     open={confirmDeleteModalOpen}
