@@ -1,18 +1,14 @@
-import { React, useState, Fragment } from 'react'
+import { React, useState } from 'react'
 
 // MUI components
-import { Box, Grid, Typography, Dialog, Button, IconButton, TextField } from '@mui/material'
-import DatePicker from '@mui/lab/DatePicker';
+import { Box, Typography, Dialog, Button, IconButton, TextField, Select, MenuItem, FormControl } from '@mui/material'
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { convertDateFormat } from "../lowLevelHelpers";
 
 export function EditModal(props) {
     let { open, selectedCatData, saveUpdates, closeEditModal } = props
-    // let { id, thumbnail_url, name, birthdate, owner_name } = selectedCatData
-    
-    console.log(`EditModal has selectedCatData: ${JSON.stringify(selectedCatData, null, 4)}`)
-
     return (
         <Dialog
             open={open}
@@ -66,16 +62,19 @@ function Form(props) {
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;
-        // console.log(`Change event has name: "${name}" and value: "${value}"`);
         setFormState({
             ...formState,
             [name]: value,
         });
     }
-    // console.log(`Form has name: ${formState.name}`);
-    // console.log(`Form has thumbnail_url: ${formState.thumbnail_url}`);
-    // console.log(`Form has owner: ${formState.owner_name}`);
-    // console.log(`Form has birthdate: ${formState.birthdate}`);
+    const handleDateChange = (newDate) => {
+        console.log(`New Date: ${newDate}`)
+        let trimmedDate = newDate.slice(0,10)
+        setFormState({
+            ...formState,
+            "birthdate": trimmedDate,
+        });
+    }
 
     return (
         <Box sx={{
@@ -96,6 +95,7 @@ function Form(props) {
             <BirthdateInput
                 formBirthdate={formState.birthdate}
                 handleFormChange={handleFormChange}
+                handleDateChange={handleDateChange}
             />
             <OwnerInput
                 formOwner={formState.owner_name}
@@ -151,27 +151,27 @@ function NameInput(props) {
 }
 
 function BirthdateInput(props) {
-    let { formBirthdate, handleFormChange } = props
+    let { formBirthdate, handleFormChange, handleDateChange } = props
     
-    let params = {
-        variant: "outlined"
-
-    }
+    const [date, setDate] = useState(formBirthdate)
     
     return (
-        <FormRow>
+        <FormRow >
             <Typography
                 variant="body1"
                 children={"Birthdate"}
                 sx={{ width: "40%" }}
             />
-            {/* <DatePicker
+            {/* <DesktopDatePicker
                 name="birthdate"
                 value={formBirthdate}
-                // variant="outlined"
-                onChange={handleFormChange}
+                onChange={(newDate) => {
+                    setDate(newDate);
+                }}
+                onAccept={() => handleDateChange(date)}
                 renderInput={(params) => <TextField {...params} />}
-            /> */}
+            />
+            <Box sx={{ width: "4rem" }} /> */}
             <TextField
                 name="birthdate"
                 value={formBirthdate}
@@ -183,6 +183,9 @@ function BirthdateInput(props) {
 }
 function OwnerInput(props) {
     let { formOwner, handleFormChange } = props
+    
+    let owners = ["Claire Morrison", "Jane Doe", "Jane Smith", "John Doe", "Kate Debarros", "Sam Jones"]
+    
     return (
         <FormRow>
             <Typography
@@ -190,12 +193,28 @@ function OwnerInput(props) {
                 children={"Owner"}
                 sx={{ width: "40%" }}
             />
-            <TextField
+            <FormControl sx={{ width: "50%" }} > 
+            {/* <TextField
                 name="owner_name"
                 value={formOwner}
                 variant="outlined"
                 onChange={handleFormChange}
-            />
+            /> */}
+                <Select
+                    name="owner_name"
+                    labelId="select-owner"
+                    id="select-owner"
+                    value={formOwner}
+                    onChange={handleFormChange}
+                >
+                    <MenuItem value="Claire Morrison" >Claire Morrison</MenuItem>
+                    <MenuItem value="Jane Doe" >Jane Doe</MenuItem>
+                    <MenuItem value="Jane Smith" >Jane Smith</MenuItem>
+                    <MenuItem value="John Doe" >John Doe</MenuItem>
+                    <MenuItem value="Kate Debarros" >Kate Debarros</MenuItem>
+                    <MenuItem value="Sam Jones" >Sam Jones</MenuItem>
+                </Select>
+            </FormControl>
         </FormRow>
     )
 }
@@ -228,7 +247,6 @@ function SaveAndCancelButtons(props) {
                 justifyContent: "flex-end",
                 alignItems: "center",
                 borderTop: "solid #888 1px",
-
             }}
         >
             <Button
