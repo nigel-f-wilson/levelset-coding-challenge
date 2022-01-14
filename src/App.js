@@ -1,5 +1,9 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState } from 'react'
 import { sourceCatData } from "./catData";
+
+// For Date Picker
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import { AppBar } from "./components/AppBar"
 import { SideBar } from "./components/SideBar"
@@ -16,17 +20,7 @@ import { ThemeProvider } from '@mui/material'
 
 export default function App() {
     const [catList, setCatList] = useState(sourceCatData)
-    
-    
     const [selectedCatData, setSelectedCatData] = useState({})
-
-    // useEffect(() => {
-    //     console.log(`selectedCatData: ${selectedCatData}`);
-    //     // setState(num);
-    // }, [selectedCatData]);
-
-
-
     
     const [searchString, setSearchString] = useState("")
     function handleSearchStringChange(event) {
@@ -44,9 +38,6 @@ export default function App() {
     }
 
     const saveUpdates = (updatedCatData, cl = catList) => {
-        console.log(`SAVE CLICKED`);
-        console.log(`updatedCatData: ${JSON.stringify(updatedCatData, null, 4)}`);
-
         let idOfCatToUpdate = updatedCatData.id
         let index = getIndexInList(idOfCatToUpdate)
         let updatedCatList = [...cl]
@@ -55,7 +46,6 @@ export default function App() {
         closeEditModal()
         setSelectedCatData(updatedCatData)
     }
-
     
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false)
     const toggleConfirmDeleteModal = (confirmDeleteModalOpen) => {
@@ -96,53 +86,55 @@ export default function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box id="root"
-                sx={{
-                    width: "100vw",
-                    height: "100vh",
-                    backgroundColor: "#efefef", // grey backdrop
-                    overflow: "hidden",
-                    display: 'flex',
-                    flexDirection: "column",
-                }}
-            >
-                <AppBar />
-
-                <Container
-                    maxWidth="lg"
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Box id="root"
                     sx={{
-                        height: "100%",
-                        display: "flex"
-                    }} 
+                        width: "100vw",
+                        height: "100vh",
+                        backgroundColor: "#efefef", // grey backdrop
+                        overflow: "hidden",
+                        display: 'flex',
+                        flexDirection: "column",
+                    }}
                 >
-                    <SideBar
-                        searchString={searchString}
-                        handleSearchStringChange={handleSearchStringChange}
-                        catList={catList}
-                        viewCatDetails={viewCatDetails}
-                    />
-                    <DetailPanel 
-                        selectedCatData={selectedCatData}
+                    <AppBar />
+
+                    <Container
+                        maxWidth="lg"
+                        sx={{
+                            height: "100%",
+                            display: "flex"
+                        }} 
+                    >
+                        <SideBar
+                            searchString={searchString}
+                            handleSearchStringChange={handleSearchStringChange}
+                            catList={catList}
+                            viewCatDetails={viewCatDetails}
+                        />
+                        <DetailPanel 
+                            selectedCatData={selectedCatData}
+                            toggleEditModal={toggleEditModal}
+                            toggleConfirmDeleteModal={toggleConfirmDeleteModal}
+                            deleteCat={deleteCat}
+                        />
+                    </Container>
+                    
+                    <EditModal 
+                        open={editModalOpen}
                         toggleEditModal={toggleEditModal}
+                        selectedCatData={selectedCatData}
+                        saveUpdates={saveUpdates}
+                        closeEditModal={closeEditModal}
+                    />
+                    <ConfirmDeleteModal
+                        open={confirmDeleteModalOpen}
                         toggleConfirmDeleteModal={toggleConfirmDeleteModal}
+                        selectedCatData={selectedCatData}
                         deleteCat={deleteCat}
                     />
-                </Container>
-                
-                <EditModal 
-                    open={editModalOpen}
-                    toggleEditModal={toggleEditModal}
-                    selectedCatData={selectedCatData}
-                    saveUpdates={saveUpdates}
-                    closeEditModal={closeEditModal}
-                />
-                <ConfirmDeleteModal
-                    open={confirmDeleteModalOpen}
-                    toggleConfirmDeleteModal={toggleConfirmDeleteModal}
-                    selectedCatData={selectedCatData}
-                    deleteCat={deleteCat}
-                />
-            </Box>
+                </Box>
+            </LocalizationProvider>
         </ThemeProvider>
     )
 
