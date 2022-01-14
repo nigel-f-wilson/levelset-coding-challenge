@@ -5,11 +5,11 @@ import { AppBar } from "./components/AppBar"
 import { SummaryList } from "./components/SummaryList"
 import { DetailPanel } from "./components/DetailPanel"
 import { EditModal } from "./components/EditModal";
+import { ConfirmDeleteModal } from "./components/ConfirmDeleteModal";
 
 
 // MUI components
-import { Container, Box, Avatar, Grid, Typography,   } from '@mui/material'
-import { Dialog, Button, IconButton } from '@mui/material'
+import { Container, Box } from '@mui/material'
 
 // THEME
 import theme from "./theme"
@@ -24,15 +24,23 @@ export default function App() {
     const [selectedCatData, setSelectedCatData] = useState({})
     
     const [editModalOpen, setEditModalOpen] = useState(false)
-
     const toggleEditModal = (editModalOpen) => {
         setEditModalOpen(!editModalOpen)
     }
+    
+    const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false)
+    const toggleConfirmDeleteModal = (confirmDeleteModalOpen) => {
+        setConfirmDeleteModalOpen(!confirmDeleteModalOpen)
+    }
+
+    
 
     const deleteCat = (selectedCatId, cl = catList ) => {
         let filteredList = cl.filter(cat => cat.id !== selectedCatId)
         // console.log(`List after deleting cat ${selectedCatId} is: ${JSON.stringify(filteredList, null, 4)}`);
         setCatList(filteredList)
+        toggleConfirmDeleteModal(confirmDeleteModalOpen)
+        setSelectedCatData({})
     }
 
     const saveUpdates = () => {
@@ -41,12 +49,9 @@ export default function App() {
 
     const viewCatDetails = (catId) => {
         incrementViewCount(catId)
-        
         setSelectedCatData(getCatDataById(catId))
         console.log(`Setting selected cat to: ${catId}`);
     }
-
-
     const incrementViewCount = (catId) => {
         let prevCount = getCatDataById(catId).views_count
         let index = getIndexInList(catId)
@@ -118,6 +123,7 @@ export default function App() {
                     <DetailPanel 
                         selectedCatData={selectedCatData}
                         toggleEditModal={toggleEditModal}
+                        toggleConfirmDeleteModal={toggleConfirmDeleteModal}
                         deleteCat={deleteCat}
                     />
                 </Container>
@@ -127,6 +133,13 @@ export default function App() {
                     toggleEditModal={toggleEditModal}
                     selectedCatData={selectedCatData}
 
+
+                />
+                <ConfirmDeleteModal
+                    open={confirmDeleteModalOpen}
+                    toggleConfirmDeleteModal={toggleConfirmDeleteModal}
+                    selectedCatData={selectedCatData}
+                    deleteCat={deleteCat}
                 />
             </Box>
         </ThemeProvider>

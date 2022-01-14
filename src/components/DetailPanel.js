@@ -5,7 +5,7 @@ import { convertDateFormat } from "../lowLevelHelpers";
 import { Box, Typography, Button } from '@mui/material'
 
 export function DetailPanel(props) {
-    let { selectedCatData, toggleEditModal, deleteCat } = props
+    let { selectedCatData, toggleEditModal, toggleConfirmDeleteModal, deleteCat } = props
     let { id, name, thumbnail_url, birthdate, owner_name, views_count } = selectedCatData
 
     // const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate])  
@@ -31,7 +31,7 @@ export function DetailPanel(props) {
             <Typography variant="h3" children={name} />
             <Typography variant="h5" children={`Birthdate: ${dateString}`} />
             <Typography variant="h5" children={`Owner: ${owner_name}`} />
-            <Typography variant="h5" children={`Number of views: ${views_count} times`} />
+            <Typography variant="h5" children={`Number of views: ${views_count}`} />
         </Box>
         :
         <Typography variant="h3" children="Please Select a Cat" />
@@ -53,12 +53,13 @@ export function DetailPanel(props) {
                 deleteCat={deleteCat}
                 selectedCatId={id}
                 selectedCatData={selectedCatData}
+                toggleConfirmDeleteModal={toggleConfirmDeleteModal}
             />
         </Box>
     )
 }
 function Buttons(props) {
-    let { toggleEditModal, deleteCat, selectedCatData } = props
+    let { toggleEditModal, toggleConfirmDeleteModal, selectedCatData } = props
     
     let display = (selectedCatData.id) ? "flex" : "none"
     return (
@@ -79,7 +80,8 @@ function Buttons(props) {
             <Box sx={{ width: "0", height: "1.6rem", margin: "0.8rem 0.5rem", border: "solid black 1px" }} />
             <Button
                 children="Delete"
-                onClick={() => deleteCat(selectedCatData.id)}
+                // onClick={() => deleteCat(selectedCatData.id)}
+                onClick={() => toggleConfirmDeleteModal()}
             />
         </Box>
     )
