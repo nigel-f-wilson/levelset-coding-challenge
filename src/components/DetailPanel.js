@@ -16,7 +16,7 @@ export function DetailPanel(props) {
             display: "flex",
             flexDirection: "column",
             width: "70%",
-            flex: "1 0 80%"
+            flex: "1 0 70%"
         }}>
             <Box id="cat detail picture"
                 sx={{
@@ -67,7 +67,7 @@ function Buttons(props) {
             sx={{
                 display: display,
                 width: '100%',
-                flex: "0 0 25%",
+                flex: "0 0 30%",
                 justifyContent: "flex-end",
                 alignItems: "flex-start",
                 paddingRight: "15%"
