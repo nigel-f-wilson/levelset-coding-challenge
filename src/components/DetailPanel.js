@@ -39,7 +39,7 @@ export function DetailPanel(props) {
 
     return (
         <Box sx={{
-            flex: "0 0 75%",
+            width: "65%",
             height: "100%",
             display: "flex",
             flexDirection: "column",
@@ -80,7 +80,6 @@ function Buttons(props) {
             <Box sx={{ width: "0", height: "1.6rem", margin: "0.8rem 0.5rem", border: "solid black 1px" }} />
             <Button
                 children="Delete"
-                // onClick={() => deleteCat(selectedCatData.id)}
                 onClick={() => toggleConfirmDeleteModal()}
             />
         </Box>
