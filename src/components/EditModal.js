@@ -1,7 +1,7 @@
-import { React, useState } from 'react'
+import { React, useState, Fragment } from 'react'
 
 // MUI components
-import { Box, Typography, Dialog, Button, IconButton, TextField } from '@mui/material'
+import { Box, Grid, Typography, Dialog, Button, IconButton, TextField } from '@mui/material'
 import DatePicker from '@mui/lab/DatePicker';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -9,24 +9,29 @@ import { convertDateFormat } from "../lowLevelHelpers";
 
 export function EditModal(props) {
     let { open, selectedCatData, toggleEditModal, saveUpdates } = props
+    // let { id, thumbnail_url, name, birthdate, owner_name } = selectedCatData
+    
+    let [formName, setFormName] = useState(selectedCatData.name)
+    let [formUrl, setFormUrl] = useState(selectedCatData.thumbnail_url)
+    let [formBirthdate, setFormBirthdate] = useState(selectedCatData.birthdate)
+    let [formOwner, setFormOwner] = useState(selectedCatData.owner_name)
 
-    // let [editedCat, setEditedCat] = useState({...selectedCatData})
-    let [editedCat, setEditedCat] = useState(Object.assign({}, selectedCatData))
-
-    console.log(`EDIT MODAL HAS SELECTED: ${JSON.stringify(selectedCatData, null, 4)}`);
-    console.log(`EDIT MODAL HAS EDITED: ${JSON.stringify(editedCat, null, 4)}`);
-
+    console.log(`EditModal has name: ${selectedCatData.name}`)
+    console.log(`EditModal has formName: ${formName}`)
+    // console.log(`EditModal has thumbnail_url: ${selectedCatData.thumbnail_url}`)
+    // console.log(`EditModal has formUrl: ${formUrl}`)
+    
     const updateName = (event) => {
-        setEditedCat({...editedCat, name: event.target.value})
+        setFormName(event.target.value)
     }
     const updateURL = (event) => {
-        setEditedCat({ ...editedCat, thumbnail_url: event.target.value })
+        setFormUrl(event.target.value)
     }
     const updateBirthdate = (event) => {
-        setEditedCat({ ...editedCat, birthdate: event.target.value })
+        setFormBirthdate(event.target.value)
     }
     const updateOwner = (event) => {
-        setEditedCat({ ...editedCat, owner_name: event.target.value })
+        setFormOwner(event.target.value)
     }
     
 
@@ -48,9 +53,10 @@ export function EditModal(props) {
             <Form 
                 selectedCatData={selectedCatData}
                 saveUpdates={saveUpdates}
-                editedCat={editedCat}
                 toggleEditModal={toggleEditModal}
-                editedCat={editedCat}
+
+                formUrl={formUrl}
+
                 updateName={updateName}
                 updateURL={updateURL}
                 updateBirthdate={updateBirthdate}
@@ -82,8 +88,11 @@ function Header(props) {
     )
 }
 function Form(props) {
-    let { editedCat, saveUpdates, toggleEditModal, updateName,
+    let { formUrl,  editedCat, saveUpdates, toggleEditModal, updateName,
     updateURL, updateBirthdate, updateOwner } = props
+
+    console.log(`Form has formUrl: ${formUrl}`);
+
 
     return (
         <Box sx={{
@@ -91,7 +100,7 @@ function Form(props) {
             display: "flex",
             flexDirection: "column"
         }} >
-            <Box sx={{
+            {/* <Box sx={{
                 height: "550px",
                 display: "flex",
                 padding: "0 1rem"
@@ -104,7 +113,17 @@ function Form(props) {
                     updateBirthdate={updateBirthdate}
                     updateOwner={updateOwner}
                 />
-            </Box>
+            </Box> */}
+            
+            <UrlInput 
+                formUrl={formUrl}
+                updateURL={updateURL}
+            />
+            <FormRow>
+
+            </FormRow>
+
+
             <SaveAndCancelButtons 
                 saveUpdates={saveUpdates} 
                 editedCat={editedCat} 
@@ -113,6 +132,42 @@ function Form(props) {
         </Box>
     )
 }
+function FormRow(props) {
+    return (
+        <Box id="form_row"
+            sx={{
+                border: "solid #dd2 2px ",
+                width: "100%",
+                height: "100px",
+                paddingLeft: "2rem",
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center"
+            }} >
+            {props.children}
+        </Box>
+    )
+}
+function UrlInput(props) {
+    let { formUrl, updateURL } = props
+
+    console.log(`UrlInput has formUrl: ${formUrl}`);
+    return (
+        <FormRow>
+            <Typography
+                variant="body1"
+                children={"Thumbnail URL"}
+                sx={{ width: "40%" }}
+            />
+            <TextField
+                value={formUrl}
+                variant="outlined"
+                onChange={(e) => updateURL(e)}
+            />
+        </FormRow>
+    )
+}
+
 function FormLabels() {
     return (
         <Box id="form_labels"
