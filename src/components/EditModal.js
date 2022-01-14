@@ -9,30 +9,26 @@ export function EditModal(props) {
     let { open, selectedCatData, toggleEditModal, saveUpdates } = props
     // let { id, name, birthdate, owner_name, thumbnail_url } = selectedCatData
 
-    let [catData, setCatData] = useState({selectedCatData})
+    // let [editedCat, setEditedCat] = useState({...selectedCatData})
+    let [editedCat, setEditedCat] = useState(Object.assign({}, selectedCatData))
 
-    let [editedCat, setEditedCat] = useState({ selectedCatData })
+    console.log(`EDIT MODAL HAS SELECTED: ${JSON.stringify(selectedCatData, null, 4)}`);
+    console.log(`EDIT MODAL HAS EDITED: ${JSON.stringify(editedCat, null, 4)}`);
 
-
-    function updateLocalCatData() {
-        
-    }
-
-    // const handleUpdate = (todo) => {
-    //     setTodos({ ...todos, [todo.id]: todo });
-    // }
-    // const update = (value) => {
-    //     setCatData({ ...catData, [catData]: value });
-    // }
     const updateName = (event) => {
-        setCatData({ ...catData, [catData.name]: event.target.value });
+        setEditedCat({...editedCat, name: event.target.value})
     }
-
-    // COPIED
-    // function handleNameStringChange(event) {
-    //     setNameSearchString(event.target.value.toLowerCase())
-    // }
+    const updateURL = (event) => {
+        setEditedCat({ ...editedCat, thumbnail_url: event.target.value })
+    }
+    const updateBirthdate = (event) => {
+        setEditedCat({ ...editedCat, birthdate: event.target.value })
+    }
+    const updateOwner = (event) => {
+        setEditedCat({ ...editedCat, owner_name: event.target.value })
+    }
     
+
     return (
         <Dialog
             open={open}
@@ -55,14 +51,17 @@ export function EditModal(props) {
                 toggleEditModal={toggleEditModal}
             />
             <Form 
-                catData={catData}
-            />
-            <SaveAndCancelButtons 
+                selectedCatData={selectedCatData}
                 saveUpdates={saveUpdates}
                 editedCat={editedCat}
                 toggleEditModal={toggleEditModal}
-            />
+                editedCat={editedCat}
+                updateName={updateName}
+                updateURL={updateURL}
+                updateBirthdate={updateBirthdate}
+                updateOwner={updateOwner}
 
+            />
         </Dialog>
     )
 }
@@ -88,17 +87,33 @@ function Header(props) {
     )
 }
 function Form(props) {
-    let { catData } = props
+    let { editedCat, saveUpdates, toggleEditModal, updateName,
+    updateURL, updateBirthdate, updateOwner } = props
 
     return (
         <Box sx={{
             height: "550px",
             display: "flex",
-            padding: "0 1rem"
+            flexDirection: "column"
         }} >
-            <FormLabels />
-            <FormInputs
-                catData={catData}
+            <Box sx={{
+                height: "550px",
+                display: "flex",
+                padding: "0 1rem"
+            }} >
+                <FormLabels />
+                <FormInputs
+                    editedCat={editedCat}
+                    updateName={updateName}
+                    updateURL={updateURL}
+                    updateBirthdate={updateBirthdate}
+                    updateOwner={updateOwner}
+                />
+            </Box>
+            <SaveAndCancelButtons 
+                saveUpdates={saveUpdates} 
+                editedCat={editedCat} 
+                toggleEditModal={toggleEditModal}       
             />
         </Box>
     )
@@ -135,11 +150,11 @@ function FormLabels() {
     )
 }
 function FormInputs(props) {
-    let { catData } = props
-    let { id, name, birthdate, owner_name, thumbnail_url } = catData
+    let { editedCat, updateName, updateURL, updateBirthdate, updateOwner } = props
+    let { id, name, birthdate, owner_name, thumbnail_url } = editedCat
 
 
-    console.log(`FORM INPUTS HAS DATA: ${JSON.stringify(catData, null, 4)}`);
+    console.log(`FORM INPUTS HAS DATA: ${JSON.stringify(editedCat, null, 4)}`);
 
     console.log(`name VALUE should be set to: ${name}`);
 
@@ -155,18 +170,20 @@ function FormInputs(props) {
             <TextField
                 value={thumbnail_url}
                 variant="outlined"
+                onChange={(e) => updateURL(e)}
+
 
             />
             <TextField
                 value={name}
-                // onChange={updateName}
+                onChange={(e) => updateName(e)}
                 variant="outlined"
 
 
 
             />
             {/* <DatePicker
-                        value={catData.birthdate}
+                        value={selectedCatData.birthdate}
                         variant="outlined"
                         onChange={}
 
@@ -176,13 +193,15 @@ function FormInputs(props) {
             <TextField
                 value="Test"
                 variant="outlined"
+                // onChange={(e) => updateName(e)}
 
 
 
             />
             <TextField
-                value="Test"
+                value={owner_name}
                 variant="outlined"
+                onChange={(e) => updateOwner(e)}
 
 
 
@@ -208,7 +227,9 @@ function SaveAndCancelButtons(props) {
         >
             <Button
                 children="Save"
-                onClick={() => { saveUpdates(editedCat) }}
+                // onClick={() => { saveUpdates(editedCat) }}
+                onClick={saveUpdates}
+
             // onClick={saveUpdates(editedCat)}
             />
             <Box sx={{ width: "0", height: "1.6rem", margin: "0.8rem 0.5rem", border: "solid black 1px" }} />

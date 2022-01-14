@@ -1,25 +1,18 @@
-import { React, useState, useEffect, useMemo } from 'react'
+import { React, useState } from 'react'
 import { sourceCatData } from "./catData";
 
 import { AppBar } from "./components/AppBar"
-import { SummaryList } from "./components/SummaryList"
 import { SideBar } from "./components/SideBar"
 import { DetailPanel } from "./components/DetailPanel"
 import { EditModal } from "./components/EditModal";
 import { ConfirmDeleteModal } from "./components/ConfirmDeleteModal";
 
-
 // MUI components
 import { Container, Box } from '@mui/material'
-import { TextField } from '@mui/material'
-
 
 // THEME
 import theme from "./theme"
 import { ThemeProvider } from '@mui/material'
-
-let primary = theme.palette.primary.main
-
 
 export default function App() {
     const [catList, setCatList] = useState(sourceCatData)
@@ -35,17 +28,17 @@ export default function App() {
     const toggleEditModal = (editModalOpen) => {
         setEditModalOpen(!editModalOpen)
     }
+    const saveUpdates = (event) => {
+        console.log(`SAVE CLICKED    EVENT: ${JSON.stringify(event, null, 4)}`);
+    }
+
     
     const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false)
     const toggleConfirmDeleteModal = (confirmDeleteModalOpen) => {
         setConfirmDeleteModalOpen(!confirmDeleteModalOpen)
     }
-
-    
-
     const deleteCat = (selectedCatId, cl = catList ) => {
         let filteredList = cl.filter(cat => cat.id !== selectedCatId)
-        // console.log(`List after deleting cat ${selectedCatId} is: ${JSON.stringify(filteredList, null, 4)}`);
         setCatList(filteredList)
         toggleConfirmDeleteModal(confirmDeleteModalOpen)
         setSelectedCatData({})
