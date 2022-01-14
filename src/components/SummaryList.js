@@ -1,11 +1,8 @@
 import { React, useMemo } from 'react'
-import { useTheme } from '@mui/styles';
 
-import { convertDateFormat } from "../lowLevelHelpers";
-
-
-// MUI components
+import { convertDateFormat } from "../lowLevelHelpers"
 import { Box, Avatar, Typography, List } from '@mui/material'
+import { useTheme } from '@mui/styles'
 
 
 export function SummaryList(props) {
@@ -37,7 +34,6 @@ function CatSummary(props) {
     let { id, name, birthdate, thumbnail_url } = cat
 
     let primary = useTheme().palette.primary.main
-
     const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate]);  // Could doing something simlar to Memoize the Avatar component improve performance vs. just passing it the url and asking it to refetch that image on every render. Is that what is currently happening? 
 
     let display = (nameIncludesSearchString(name, searchString)) ? 'flex' : 'none'
@@ -68,7 +64,6 @@ function CatSummary(props) {
                     }}
                 />
                 <Typography variant="h3" children={name}  />
-
             </Box>
             <Typography variant="h5" children={dateString} sx={{ padding: "1rem 1rem 0rem" }} />
         </Box>

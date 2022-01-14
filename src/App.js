@@ -44,8 +44,6 @@ export default function App() {
         setSelectedCatData({})
     }
 
-    
-
     const viewCatDetails = (catId) => {
         incrementViewCount(catId)
         setSelectedCatData(getCatDataById(catId))
@@ -72,17 +70,6 @@ export default function App() {
         return cat[0]
     }
 
-    
-    
-    // let catIds = catData.map(cat => cat.id)
-    // let validSelection = catIds.includes(selectedCatId)
-    // let selectedCatData = (validSelection) ? getCatById(selectedCatId) : "Please Select a Cat"
-    // console.log(`Cat IDS present: ${catIds}`);
-    // console.log(`VALID selection: ${validSelection}`)
-    // console.log(`DATA for SELECTED cat number ${selectedCatId}: ${JSON.stringify(selectedCatData, null, 4)}`);
-
-    
-  
     return (
         <ThemeProvider theme={theme}>
             <Box id="root"

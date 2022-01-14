@@ -5,9 +5,10 @@ import { Box, Typography, Dialog, Button, IconButton, TextField } from '@mui/mat
 import DatePicker from '@mui/lab/DatePicker';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { convertDateFormat } from "../lowLevelHelpers";
+
 export function EditModal(props) {
     let { open, selectedCatData, toggleEditModal, saveUpdates } = props
-    // let { id, name, birthdate, owner_name, thumbnail_url } = selectedCatData
 
     // let [editedCat, setEditedCat] = useState({...selectedCatData})
     let [editedCat, setEditedCat] = useState(Object.assign({}, selectedCatData))
@@ -40,12 +41,6 @@ export function EditModal(props) {
                     borderRadius: 4,
                     overflowX: "hidden"
                 }
-
-            }}
-            sx={{
-
-
-                margin: "0"
             }}>
             <Header 
                 toggleEditModal={toggleEditModal}
@@ -117,8 +112,6 @@ function Form(props) {
             />
         </Box>
     )
-
-
 }
 function FormLabels() {
     return (
@@ -151,13 +144,11 @@ function FormLabels() {
 }
 function FormInputs(props) {
     let { editedCat, updateName, updateURL, updateBirthdate, updateOwner } = props
-    let { id, name, birthdate, owner_name, thumbnail_url } = editedCat
-
+    let { name, birthdate, owner_name, thumbnail_url } = editedCat
 
     console.log(`FORM INPUTS HAS DATA: ${JSON.stringify(editedCat, null, 4)}`);
-
     console.log(`name VALUE should be set to: ${name}`);
-
+    let dateString = convertDateFormat(birthdate)
 
     return (
         <Box id="form_Inputs"
@@ -171,40 +162,25 @@ function FormInputs(props) {
                 value={thumbnail_url}
                 variant="outlined"
                 onChange={(e) => updateURL(e)}
-
-
             />
             <TextField
                 value={name}
                 onChange={(e) => updateName(e)}
                 variant="outlined"
-
-
-
             />
             {/* <DatePicker
                         value={selectedCatData.birthdate}
                         variant="outlined"
-                        onChange={}
-
-
-
-                    /> */}
+                        onChange={(e) => updateBirthdat(e)}
+            /> */}
             <TextField
-                value="Test"
+                value={dateString}
                 variant="outlined"
-                // onChange={(e) => updateName(e)}
-
-
-
             />
             <TextField
                 value={owner_name}
                 variant="outlined"
                 onChange={(e) => updateOwner(e)}
-
-
-
             />
         </Box>
     )
@@ -229,8 +205,6 @@ function SaveAndCancelButtons(props) {
                 children="Save"
                 // onClick={() => { saveUpdates(editedCat) }}
                 onClick={saveUpdates}
-
-            // onClick={saveUpdates(editedCat)}
             />
             <Box sx={{ width: "0", height: "1.6rem", margin: "0.8rem 0.5rem", border: "solid black 1px" }} />
             <Button
