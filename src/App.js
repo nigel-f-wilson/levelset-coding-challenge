@@ -53,6 +53,7 @@ export default function App() {
         updatedCatList[index] = updatedCatData
         setCatList(updatedCatList)
         closeEditModal()
+        setSelectedCatData(updatedCatData)
     }
 
     

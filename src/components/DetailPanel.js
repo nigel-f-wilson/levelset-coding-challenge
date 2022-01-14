@@ -6,36 +6,6 @@ import { Box, Typography, Button } from '@mui/material'
 
 export function DetailPanel(props) {
     let { selectedCatData, toggleEditModal, toggleConfirmDeleteModal, deleteCat } = props
-    let { id, name, thumbnail_url, birthdate, owner_name, views_count } = selectedCatData
-
-    // const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate])  
-    const dateString = convertDateFormat(birthdate) 
-
-    let details = (selectedCatData.id) ?
-        <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "70%",
-            flex: "1 0 70%"
-        }}>
-            <Box id="cat detail picture"
-                sx={{
-                    paddingTop: "75%",
-                    height: '0',
-                    width: '100%',
-                    backgroundImage: `url(${thumbnail_url})`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                }}
-            />
-            <Typography variant="h3" children={name} />
-            <Typography variant="h5" children={`Birthdate: ${dateString}`} />
-            <Typography variant="h5" children={`Owner: ${owner_name}`} />
-            <Typography variant="h5" children={`Number of views: ${views_count}`} />
-        </Box>
-        :
-        <Typography variant="h3" children="Please Select a Cat" />
-
 
     return (
         <Box sx={{
@@ -47,17 +17,58 @@ export function DetailPanel(props) {
             alignItems: "center",
             padding: "4rem 0rem"
         }}>
-            {details}
+            <Details 
+                selectedCatData={selectedCatData}
+            />
             <Buttons
                 toggleEditModal={toggleEditModal}
                 deleteCat={deleteCat}
-                selectedCatId={id}
+                selectedCatId={selectedCatData.id}
                 selectedCatData={selectedCatData}
                 toggleConfirmDeleteModal={toggleConfirmDeleteModal}
             />
         </Box>
     )
 }
+
+function Details(props) {
+    let { id, name, thumbnail_url, birthdate, owner_name, views_count } = props.selectedCatData
+    
+    // const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate])  
+    const dateString = convertDateFormat(birthdate) 
+
+    if (id) {
+        return (
+            <Box sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "70%",
+                flex: "1 0 70%"
+            }}>
+                <Box id="cat detail picture"
+                    sx={{
+                        paddingTop: "75%",
+                        height: '0',
+                        width: '100%',
+                        backgroundImage: `url(${thumbnail_url})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover',
+                    }}
+                />
+                <Typography variant="h3" children={name} />
+                <Typography variant="h5" children={`Birthdate: ${dateString}`} />
+                <Typography variant="h5" children={`Owner: ${owner_name}`} />
+                <Typography variant="h5" children={`Number of views: ${views_count}`} />
+            </Box>
+        )
+    }
+    else {
+        return (
+            <Typography variant="h3" children="Please Select a Cat" />
+        )
+    }
+}
+
 function Buttons(props) {
     let { toggleEditModal, toggleConfirmDeleteModal, selectedCatData } = props
     
