@@ -3,6 +3,9 @@ import { React, useState } from 'react'
 import { NameInput } from "./inputs/NameInput";
 import { UrlInput } from "./inputs/UrlInput";
 import { BirthdateInput } from "./inputs/BirthdateInput";
+import { OwnerInput } from "./inputs/OwnerInput";
+
+
 // MUI components
 import { Box, Typography, Dialog, Button, IconButton, TextField, Select, MenuItem, FormControl } from '@mui/material'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
@@ -113,44 +116,6 @@ function Form(props) {
     )
 
     
-}
-
-function OwnerInput(props) {
-    let { formOwner, handleFormChange } = props
-    
-    let owners = ["Claire Morrison", "Jane Doe", "Jane Smith", "John Doe", "Kate Debarros", "Sam Jones"]
-    
-    return (
-        <FormRow>
-            <Typography
-                variant="body1"
-                children={"Owner"}
-                sx={{ width: "40%" }}
-            />
-            <FormControl sx={{ width: "50%" }} > 
-            {/* <TextField
-                name="owner_name"
-                value={formOwner}
-                variant="outlined"
-                onChange={handleFormChange}
-            /> */}
-                <Select
-                    name="owner_name"
-                    labelId="select-owner"
-                    id="select-owner"
-                    value={formOwner}
-                    onChange={handleFormChange}
-                >
-                    <MenuItem value="Claire Morrison" >Claire Morrison</MenuItem>
-                    <MenuItem value="Jane Doe" >Jane Doe</MenuItem>
-                    <MenuItem value="Jane Smith" >Jane Smith</MenuItem>
-                    <MenuItem value="John Doe" >John Doe</MenuItem>
-                    <MenuItem value="Kate Debarros" >Kate Debarros</MenuItem>
-                    <MenuItem value="Sam Jones" >Sam Jones</MenuItem>
-                </Select>
-            </FormControl>
-        </FormRow>
-    )
 }
 
 function SaveAndCancelButtons(props) {
