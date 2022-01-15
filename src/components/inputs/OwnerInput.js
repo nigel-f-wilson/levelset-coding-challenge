@@ -17,12 +17,11 @@ export function OwnerInput(props) {
                     value={formOwner}
                     onChange={handleFormChange}
                 >
-                    <MenuItem value="Claire Morrison" >Claire Morrison</MenuItem>
-                    <MenuItem value="Jane Doe" >Jane Doe</MenuItem>
-                    <MenuItem value="Jane Smith" >Jane Smith</MenuItem>
-                    <MenuItem value="John Doe" >John Doe</MenuItem>
-                    <MenuItem value="Kate Debarros" >Kate Debarros</MenuItem>
-                    <MenuItem value="Sam Jones" >Sam Jones</MenuItem>
+                    {owners.map((owner, index) => {
+                        return (
+                            <MenuItem key={index} value={owner} >{owner}</MenuItem>
+                        )
+                    })}
                 </Select>
             </FormControl>
         </FormRow>
