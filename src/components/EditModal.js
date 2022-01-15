@@ -1,6 +1,8 @@
 import { React, useState } from 'react'
 
+import { NameInput } from "./inputs/NameInput";
 import { UrlInput } from "./inputs/UrlInput";
+import { BirthdateInput } from "./inputs/BirthdateInput";
 // MUI components
 import { Box, Typography, Dialog, Button, IconButton, TextField, Select, MenuItem, FormControl } from '@mui/material'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
@@ -113,37 +115,6 @@ function Form(props) {
     
 }
 
-function BirthdateInput(props) {
-    let { formBirthdate, handleFormChange, handleDateChange } = props
-    
-    const [date, setDate] = useState(formBirthdate)
-    
-    return (
-        <FormRow >
-            <Typography
-                variant="body1"
-                children={"Birthdate"}
-                sx={{ width: "40%" }}
-            />
-            {/* <DesktopDatePicker
-                name="birthdate"
-                value={formBirthdate}
-                onChange={(newDate) => {
-                    setDate(newDate);
-                }}
-                onAccept={() => handleDateChange(date)}
-                renderInput={(params) => <TextField {...params} />}
-            />
-            <Box sx={{ width: "4rem" }} /> */}
-            <TextField
-                name="birthdate"
-                value={formBirthdate}
-                variant="outlined"
-                onChange={handleFormChange}
-            />
-        </FormRow>
-    )
-}
 function OwnerInput(props) {
     let { formOwner, handleFormChange } = props
     
