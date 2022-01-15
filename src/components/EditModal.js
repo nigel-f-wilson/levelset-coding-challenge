@@ -153,22 +153,6 @@ function OwnerInput(props) {
     )
 }
 
-function FormRow(props) {
-    return (
-        <Box id="form_row"
-            sx={{
-                width: "100%",
-                height: "100px",
-                paddingLeft: "2rem",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center"
-            }} >
-            {props.children}
-        </Box>
-    )
-}
-
 function SaveAndCancelButtons(props) {
     let { formState, saveUpdates, closeEditModal } = props
 
