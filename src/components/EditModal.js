@@ -1,5 +1,6 @@
 import { React, useState } from 'react'
 
+import { UrlInput } from "./inputs/UrlInput";
 // MUI components
 import { Box, Typography, Dialog, Button, IconButton, TextField, Select, MenuItem, FormControl } from '@mui/material'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
@@ -110,25 +111,6 @@ function Form(props) {
     )
 
     
-}
-
-function UrlInput(props) {
-    let { formUrl, handleFormChange } = props
-    return (
-        <FormRow>
-            <Typography
-                variant="body1"
-                children={"Thumbnail URL"}
-                sx={{ width: "40%" }}
-            />
-            <TextField
-                name="thumbnail_url"
-                value={formUrl}
-                variant="outlined"
-                onChange={handleFormChange}
-            />
-        </FormRow>
-    )
 }
 
 function NameInput(props) {
