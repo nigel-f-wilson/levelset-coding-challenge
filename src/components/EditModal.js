@@ -1,5 +1,6 @@
 import { React, useState } from 'react'
 
+// My components
 import { NameInput } from "./inputs/NameInput";
 import { UrlInput } from "./inputs/UrlInput";
 import { BirthdateInput } from "./inputs/BirthdateInput";
@@ -7,11 +8,8 @@ import { OwnerInput } from "./inputs/OwnerInput";
 
 
 // MUI components
-import { Box, Typography, Dialog, Button, IconButton, TextField, Select, MenuItem, FormControl } from '@mui/material'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import { Box, Typography, Dialog, Button, IconButton, } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
-
-import { convertDateFormat } from "../lowLevelHelpers";
 
 export function EditModal(props) {
     let { open, selectedCatData, saveUpdates, closeEditModal } = props
@@ -22,7 +20,7 @@ export function EditModal(props) {
             PaperProps={{
                 sx: {
                     width: "1000px",
-                    height: "625px",
+                    height: "650px",
                     borderRadius: 4,
                     overflowX: "hidden"
                 }
@@ -44,7 +42,7 @@ function Header(props) {
     return (
         <Box sx={{
             borderBottom: "solid #888 1px",
-            height: "75px",
+            height: "100px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -60,9 +58,7 @@ function Header(props) {
     )
 }
 function Form(props) {
-    let { selectedCatData, 
-        saveUpdates, 
-        closeEditModal } = props
+    let { selectedCatData, saveUpdates, closeEditModal } = props
 
     const [formState, setFormState] = useState({...selectedCatData})
 
@@ -86,7 +82,8 @@ function Form(props) {
         <Box sx={{
             height: "550px",
             display: "flex",
-            flexDirection: "column"
+            flexDirection: "column",
+            padding: "1rem 0 0"
         }} >
             
             
@@ -126,7 +123,7 @@ function SaveAndCancelButtons(props) {
             sx={{
                 display: "flex",
                 width: '100%',
-                height: "75px",
+                height: "100px",
                 justifyContent: "flex-end",
                 alignItems: "center",
                 borderTop: "solid #888 1px",
