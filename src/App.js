@@ -59,6 +59,9 @@ export default function App() {
     }
 
     const viewCatDetails = (catId) => {
+        if (catId === selectedCatData.id) {
+            return null // Return early to prevent incrementing view count when cat currently selected is selected again.
+        }
         incrementViewCount(catId)
         setSelectedCatData(getCatDataById(catId))
         console.log(`Setting selected cat to: ${catId}`);
