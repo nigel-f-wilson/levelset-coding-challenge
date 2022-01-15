@@ -2,8 +2,9 @@ import { React, useState } from 'react'
 import { sourceCatData } from "./catData";
 
 // For Date Picker
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+// I tried implementing the MAterial UI Date Picker but it is still in Lab and was giving me trouble. In the end I went with the native HTML <input type="date"> Which does not require these adapters and Locaization
+// import AdapterDateFns from '@mui/lab/AdapterDateFns';
+// import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import { AppBar } from "./components/AppBar"
 import { SideBar } from "./components/SideBar"
@@ -89,7 +90,7 @@ export default function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
                 <Box id="root"
                     sx={{
                         width: "100vw",
@@ -137,7 +138,7 @@ export default function App() {
                         deleteCat={deleteCat}
                     />
                 </Box>
-            </LocalizationProvider>
+            {/* </LocalizationProvider> */}
         </ThemeProvider>
     )
 
