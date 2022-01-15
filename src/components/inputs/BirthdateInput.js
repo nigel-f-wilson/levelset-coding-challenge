@@ -1,8 +1,9 @@
 import { React, useState } from 'react'
 import { FormRow } from "./FormRow";
 
-// MUI components
-import {TextField } from '@mui/material'
+import { Box, Typography, TextField } from '@mui/material'
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+
 
 export function BirthdateInput(props) {
     let { formBirthdate, handleFormChange, handleDateChange } = props
@@ -11,7 +12,7 @@ export function BirthdateInput(props) {
 
     return (
         <FormRow label={"Birthdate"} >
-            {/* <DesktopDatePicker
+            <DesktopDatePicker
                 name="birthdate"
                 value={formBirthdate}
                 onChange={(newDate) => {
@@ -20,14 +21,13 @@ export function BirthdateInput(props) {
                 onAccept={() => handleDateChange(date)}
                 renderInput={(params) => <TextField {...params} />}
             />
-            <Box sx={{ width: "4rem" }} /> */}
-            <TextField
+            {/* <TextField
                 name="birthdate"
                 value={formBirthdate}
                 variant="outlined"
                 onChange={handleFormChange}
                 fullWidth 
-            />
+            /> */}
         </FormRow>
     )
 }
