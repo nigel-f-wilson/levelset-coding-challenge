@@ -113,25 +113,6 @@ function Form(props) {
     
 }
 
-function NameInput(props) {
-    let { formName, handleFormChange } = props
-    return (
-        <FormRow>
-            <Typography
-                variant="body1"
-                children={"Name"}
-                sx={{ width: "40%" }}
-            />
-            <TextField
-                name="name"
-                value={formName}
-                variant="outlined"
-                onChange={handleFormChange}
-            />
-        </FormRow>
-    )
-}
-
 function BirthdateInput(props) {
     let { formBirthdate, handleFormChange, handleDateChange } = props
     
