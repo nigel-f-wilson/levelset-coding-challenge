@@ -88,7 +88,8 @@ export function ConfirmDeleteModal(props) {
                     color="error"
                     children="No"
                     onClick={toggleConfirmDeleteModal}
-                    sx={{ width: "100px" }}
+                    size="large"
+                    sx={{ width: "120px", color: "common.white" }}
                 />
                 <Button
                     variant="contained"
@@ -98,7 +99,7 @@ export function ConfirmDeleteModal(props) {
                         deleteCat(selectedCatData.id)
                         // toggleConfirmDeleteModal()
                     }}
-                    sx={{ width: "100px"}}
+                    sx={{ width: "120px", color: "common.white" }}
                 />
             </Box>
         )

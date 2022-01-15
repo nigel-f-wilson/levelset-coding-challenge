@@ -1,7 +1,6 @@
 import { React } from 'react'
-
 import { convertDateFormat } from "../lowLevelHelpers";
-// MUI components
+
 import { Box, Typography, Button } from '@mui/material'
 
 export function DetailPanel(props) {
@@ -71,7 +70,6 @@ function Details(props) {
 
 function Buttons(props) {
     let { toggleEditModal, toggleConfirmDeleteModal, selectedCatData } = props
-    
     let display = (selectedCatData.id) ? "flex" : "none"
     return (
         <Box 

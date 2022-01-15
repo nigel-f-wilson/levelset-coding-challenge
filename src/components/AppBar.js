@@ -1,4 +1,4 @@
-// import { React } from 'react'
+import { React } from 'react'
 import { Box, Typography } from '@mui/material'
 
 export function AppBar(props) {
@@ -6,7 +6,7 @@ export function AppBar(props) {
         <Box sx={{
             height: "2.5rem",
             width: "100%",
-            backgroundColor: "primary.main",
+            backgroundColor: "grey.800",
             display: "flex",
             // justifyContent: "center"
             alignItems: "center"

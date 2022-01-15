@@ -12,14 +12,16 @@ const theme = createTheme({
                 },
             },
         },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    color: "#222"
+                },
+            },
+        },
     },
     palette: {
-        primary: {
-            light: '#000',
-            main: '#222',
-            dark: '#000',
-            contrastText: '#000'
-        }
+       
     },
     breakpoints: {
         
@@ -38,7 +40,7 @@ const theme = createTheme({
         },
         button: {
             textTransform: "none",
-            fontSize: "1.5rem"
+            fontSize: "1.5rem",
 
         },
         body1: {

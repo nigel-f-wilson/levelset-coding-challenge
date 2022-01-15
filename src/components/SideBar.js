@@ -28,12 +28,12 @@ export function SideBar(props) {
 
 function SearchBox(props) {
     let { searchString, handleSearchStringChange } = props
-    let primary = useTheme().palette.primary.main
+    let grey = useTheme().palette.grey[800]
 
     return (
         <Box sx={{
             height: "25%",
-            border: `solid ${primary} 1px`,
+            border: `solid ${grey} 1px`,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

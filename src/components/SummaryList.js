@@ -33,7 +33,8 @@ function CatSummary(props) {
     let { cat, viewCatDetails, searchString } = props
     let { id, name, birthdate, thumbnail_url } = cat
 
-    let primary = useTheme().palette.primary.main
+    let grey = useTheme().palette.grey[800]
+    
     const dateString = useMemo(() => convertDateFormat(birthdate), [birthdate]);  // Could doing something simlar to Memoize the Avatar component improve performance vs. just passing it the url and asking it to refetch that image on every render. Is that what is currently happening? 
 
     let display = (nameIncludesSearchString(name, searchString)) ? 'flex' : 'none'
@@ -50,7 +51,7 @@ function CatSummary(props) {
                 display: display,
                 flexDirection: "column",
                 padding: "1rem 2rem",
-                border: `solid ${primary} 1px`,
+                border: `solid ${grey} 1px`,
             }}>
             <Box sx={{ display: "flex", }}>
                 <Avatar
