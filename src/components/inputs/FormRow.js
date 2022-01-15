@@ -19,7 +19,7 @@ export function FormRow(props) {
             />
             <Box 
                 children={children}                
-                sx={{ flex: "0 0 55%" }}
+                sx={{ flex: "0 0 55%", display: "flex", justifyContent: "stretch" }}
             />
         </Box>
     )
