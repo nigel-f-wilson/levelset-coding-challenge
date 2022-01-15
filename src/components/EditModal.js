@@ -64,20 +64,14 @@ function Form(props) {
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;
+        console.log(`Updating Form field "${name}" with value: ${value}`)
+
         setFormState({
             ...formState,
             [name]: value,
         });
     }
-    const handleDateChange = (newDate) => {
-        console.log(`New Date: ${newDate}`)
-        let trimmedDate = newDate.slice(0,10)
-        setFormState({
-            ...formState,
-            "birthdate": trimmedDate,
-        });
-    }
-
+    
     return (
         <Box sx={{
             height: "550px",
@@ -98,7 +92,6 @@ function Form(props) {
             <BirthdateInput
                 formBirthdate={formState.birthdate}
                 handleFormChange={handleFormChange}
-                handleDateChange={handleDateChange}
             />
             <OwnerInput
                 formOwner={formState.owner_name}
